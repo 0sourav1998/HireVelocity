@@ -9,7 +9,7 @@ const companySchema = new mongoose.Schema({
         type : String  
     },
     location : {
-        type: Number 
+        type: String 
     },
     website : {
         type : String
@@ -19,7 +19,8 @@ const companySchema = new mongoose.Schema({
     },
     userId : {
         type : mongoose.Schema.Types.ObjectId ,
-        ref : "User" 
+        ref : "User" ,
+        required:true
     }
 },{timestamps : true})
 

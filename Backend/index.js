@@ -3,7 +3,9 @@ const app = express() ;
 const cookieParser = require("cookie-parser") ;
 const cors = require("cors") ;
 require("dotenv").config();
-const connectToMongo = require("./config/database")
+const connectToMongo = require("./config/database");
+const userRouter = require("./routes/UserRoute")
+const companyRoute = require("./routes/companyRoute")
 const PORT = process.env.PORT || 8080 ;
 
 app.use(express.json());
@@ -16,6 +18,9 @@ app.use(cors({
     origin : "*",
     credentials : true 
 }))
+
+app.use("/api/v1/user",userRouter)
+app.use("/api/v1/company",companyRoute)
 
 app.get("/",(req,res)=>{
     return res.send("Comming From Backend")
