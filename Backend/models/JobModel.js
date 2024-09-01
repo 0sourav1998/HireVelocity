@@ -17,6 +17,10 @@ const jobSchema = new mongoose.Schema({
         type : String ,
         required : true 
     },
+    experiance : {
+        type : Number ,
+        required : true
+    },
     position : {
         type : Number ,
         required : true 
@@ -31,15 +35,17 @@ const jobSchema = new mongoose.Schema({
     },
     company : {
         type : mongoose.Schema.Types.ObjectId,
+        ref : "Company",
         required : true
     },
     createdBy : {
         type : mongoose.Schema.Types.ObjectId,
+        ref : "User",
         required : true
     },
     applications : [{
-        type : String ,
-        required : true
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Applications"
     }]
 },{timestamps : true})
 
