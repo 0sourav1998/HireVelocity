@@ -4,9 +4,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { LogOut, User2 } from "lucide-react";
 import { Button } from "../ui/button";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const [user, setUser] = useState(false);
+  const {user} = useSelector((state)=>state.user)
   const navigate = useNavigate();
   return (
     <div className="bg-white">
@@ -19,12 +20,9 @@ const Navbar = () => {
         <div className="flex gap-4 h-14 items-center">
           <div>
             <ul className="flex justify-between gap-5">
-              {/* <li><Link>Home</Link></li>
-                <li><Link>Jobs</Link></li>
-                <li><Link>Browse</Link></li> */}
-              <li>Home</li>
-              <li>Jobs</li>
-              <li>Browse</li>
+              <li><Link to="/">Home</Link></li>
+                <li><Link to="/jobs">Jobs</Link></li>
+                <li><Link to="/browse">Browse</Link></li>
             </ul>
           </div>
           <div>

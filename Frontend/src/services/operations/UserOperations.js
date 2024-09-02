@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { apiConnector } from "../apiConnector";
 import { userEndPoints } from "../apis";
+import { setLoading, setUser } from "@/components/redux/Slice/authslice";
 
 const { SIGNUP , LOGIN} = userEndPoints;
 
@@ -25,15 +26,21 @@ export const signup = async (body,navigate) => {
   return result;
 };
 
-export const login = async(body,navigate)=>{
-  try {
-    const response = await apiConnector("POST",LOGIN,body);
-    if(response?.data?.success){
-      navigate("/");
-      toast.success("Welcome Back");
+export const login =(body,navigate)=>{
+  return async(dispatch)=>{
+    dispatch(setLoading(true))
+    try {
+      const response = await apiConnector("POST",LOGIN,body);
+      if(response?.data?.success){
+        navigate("/");
+        dispatch(setUser(response?.data?.existingUser))
+        toast.success("Welcome Back");
+      }
+    } catch (error) {
+      console.error(error.message);
+      toast.error("Login Failed")
+    }finally{
+      dispatch(setLoading(false))
     }
-  } catch (error) {
-    console.error(error.message);
-    toast.error("Login Failed")
   }
 }
