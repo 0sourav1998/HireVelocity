@@ -52,7 +52,7 @@ const Navbar = () => {
                   <div className="flex flex-col mt-2">
                     <div className="flex flex-row gap-4 items-center">
                       <User2 />
-                      <Button variant="link">User Profile</Button>
+                      <Link to="/link"><Button variant="link">User Profile</Button></Link>
                     </div>
                     <div className="flex flex-row gap-4 items-center">
                       <LogOut />

@@ -1,150 +1,164 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
-require("dotenv").config()
+const { uploadImageToCloudinary } = require("../utils/UploadImageToCloudinary");
+require("dotenv").config();
 
 exports.register = async (req, res) => {
   try {
     const { fullName, email, password, phoneNumber, role } = req.body;
-    if (!fullName || !email || !password || !phoneNumber || !role) {
+    const file = req.files.file;
+    if (!fullName || !email || !password || !phoneNumber || !role || !file) {
       return res.status(400).json({
         success: false,
         message: "All Fields are Required",
       });
     }
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const user = await User.findOne({ email });
+    if (user) {
       return res.status(400).json({
         success: false,
         message: "User Already Registered",
       });
     }
+    const Image = await uploadImageToCloudinary(file, process.env.FOLDER_NAME);
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.create({
+    const newUser = new User({
       fullName,
-      email,
       password: hashedPassword,
-      phoneNumber,
       role,
+      email,
+      phoneNumber,
+      profile: {
+        profilePhoto: Image.secure_url,
+      },
     });
+    await newUser.save();
     return res.status(201).json({
-        success : true ,
-        message : "User Created Successfully"
-    })
+      success: true,
+      message: "User Created Successfully",
+    });
   } catch (error) {
     return res.status(400).json({
-        success : false ,
-        message : "Something Went Wrong while Creating Account"
-    })
+      success: false,
+      message: "Something Went Wrong while Creating Account",
+    });
   }
 };
 
-exports.login = async(req,res)=>{
-    try{
-        const { email, password, role } = req.body;
-        if (!email || !password || !role) {
-          return res.status(400).json({
-            success: false,
-            message: "All Fields are Required",
-          });
-        }
-        let existingUser = await User.findOne({ email });
-        if(!existingUser){
-            return res.status(400).json({
-                success : false ,
-                message : "User Not Registered"
-            })
-        }
-        if(role !== existingUser.role){
-            return res.status(400).json({
-                success : false ,
-                message : "Role not match with the user"
-            })
-        }
-        if(await bcrypt.compare(password,existingUser.password)){
-            const payload = {
-                userId : existingUser._id
-            }
-            existingUser = {
-                _id : existingUser._id ,
-                fullName : existingUser.fullName ,
-                email : existingUser.email ,
-                phoneNumber : existingUser.phoneNumber ,
-                role : existingUser.role ,
-                profile : existingUser.profile
-            }
-            const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn : "1d"});
-            return res.cookie("token",token,{maxAge : 1*24*60*60*1000,httpOnly : true}).json({
-                success : true ,
-                message : `Welcome Back ${existingUser.fullName}` ,
-                existingUser ,
-                token
-            })
-        }
-    }catch(error){
-        return res.status(400).json({
-            success : false ,
-            message : "Something Went Wrong while Logging into Your Account"
-        })
-    }
-}
-
-exports.logout = async(req,res)=>{
-    try{
-        return res.status(200).cookie("token","",{maxAge : 0}).json({
-            success : true ,
-            message : "Logged Out Successfully"
-        })
-    }catch(error){
-        return res.status(400).json({
-            success : false ,
-            message : "Something Went Wrong while Logging out"
-        })
-    }
-}
-
-exports.updateProfile = async(req,res)=>{
+exports.login = async (req, res) => {
   try {
-    const {fullName , email , phoneNumber , bio , skills} = req.body ;
-    const file = req.files ;
-    let skillsArray ;
-    if(skills){
-      skillsArray = skills.split(",") ;
+    const { email, password, role } = req.body;
+    if (!email || !password || !role) {
+      return res.status(400).json({
+        success: false,
+        message: "All Fields are Required",
+      });
     }
-    const userId = req.userId ;
+    let existingUser = await User.findOne({ email });
+    if (!existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User Not Registered",
+      });
+    }
+    if (role !== existingUser.role) {
+      return res.status(400).json({
+        success: false,
+        message: "Role not match with the user",
+      });
+    }
+    if (await bcrypt.compare(password, existingUser.password)) {
+      const payload = {
+        userId: existingUser._id,
+        role : existingUser.role
+      };
+      existingUser = {
+        _id: existingUser._id,
+        fullName: existingUser.fullName,
+        email: existingUser.email,
+        phoneNumber: existingUser.phoneNumber,
+        role: existingUser.role,
+        profile: existingUser.profile,
+      };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: "1d",
+      });
+      return res
+        .cookie("token", token, {
+          maxAge: 1 * 24 * 60 * 60 * 1000,
+          httpOnly: true,
+        })
+        .json({
+          success: true,
+          message: `Welcome Back ${existingUser.fullName}`,
+          existingUser,
+          token,
+        });
+    }
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: "Something Went Wrong while Logging into Your Account",
+    });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+      success: true,
+      message: "Logged Out Successfully",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: "Something Went Wrong while Logging out",
+    });
+  }
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const { fullName, email, phoneNumber, bio, skills } = req.body;
+    const file = req.files;
+    let skillsArray;
+    if (skills) {
+      skillsArray = skills.split(",");
+    }
+    const userId = req.userId;
     const user = await User.findById(userId);
-    if(!user){
+    if (!user) {
       return res.status(404).json({
-        success : false ,
-        msessage : "User Not Found"
-      })
+        success: false,
+        msessage: "User Not Found",
+      });
     }
-    if(fullName){
-      user.fullName = fullName ;
+    if (fullName) {
+      user.fullName = fullName;
     }
-    if(email){
-      user.email = email ;
+    if (email) {
+      user.email = email;
     }
-    if(skills){
-      user.profile.skills = skillsArray ;
+    if (skills) {
+      user.profile.skills = skillsArray;
     }
-    if(phoneNumber){
-      user.phoneNumber = phoneNumber ;
+    if (phoneNumber) {
+      user.phoneNumber = phoneNumber;
     }
-    if(bio){
-      user.profile.bio = bio ;
+    if (bio) {
+      user.profile.bio = bio;
     }
     await user.save();
     return res.status(200).json({
-      success : true ,
-      message : "Profile updated Successfully",
+      success: true,
+      message: "Profile updated Successfully",
       user,
-    })
-
+    });
   } catch (error) {
     return res.status(400).json({
-      success : false ,
-      message : "Something Went Wrong while Updating Profile"
-  })
+      success: false,
+      message: "Something Went Wrong while Updating Profile",
+    });
   }
-}
+};

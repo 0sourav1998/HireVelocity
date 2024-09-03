@@ -1,9 +1,9 @@
 import { toast } from "sonner";
 import { apiConnector } from "../apiConnector";
 import { userEndPoints } from "../apis";
-import { setLoading, setUser } from "@/components/redux/Slice/authslice";
+import { setLoading, setToken, setUser } from "@/components/redux/Slice/authslice";
 
-const { SIGNUP , LOGIN} = userEndPoints;
+const { SIGNUP , LOGIN , UPDATE_PROFILE} = userEndPoints;
 
 export const signup = async (body,navigate) => {
     console.log(body)
@@ -31,9 +31,11 @@ export const login =(body,navigate)=>{
     dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST",LOGIN,body);
+      console.log(response)
       if(response?.data?.success){
         navigate("/");
         dispatch(setUser(response?.data?.existingUser))
+        dispatch(setToken(response?.data?.token))
         toast.success("Welcome Back");
       }
     } catch (error) {
@@ -43,4 +45,24 @@ export const login =(body,navigate)=>{
       dispatch(setLoading(false))
     }
   }
+}
+
+export const updateProfileOp = async(body,token) =>{
+  let result ;
+  const toastId = toast.loading("Loading...")
+  try {
+    const response = await apiConnector("PUT",UPDATE_PROFILE,body,{
+        "Content-Type" : "multipart/form-data" ,
+        Authorization : `Bearer ${token}`
+    });
+    if(response?.data?.success){
+      result = response?.data?.user;
+      toast.success("Profile Updated")
+    }
+  } catch (error) {
+    console.error(error.message)
+  }finally{
+    toast.dismiss(toastId)
+  }
+  return result ;
 }

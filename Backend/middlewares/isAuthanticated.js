@@ -3,7 +3,7 @@ require("dotenv").config();
 
 exports.isAuthanticated = async(req,res,next)=>{
     try {
-        const token = req.cookies.token ;
+        const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "") ;
         if(!token){
             return res.status(401).json({
                 success : false ,
@@ -11,6 +11,7 @@ exports.isAuthanticated = async(req,res,next)=>{
             })
         }
         const decode = jwt.verify(token,process.env.JWT_SECRET);
+        console.log("Decode",decode)
         if(!decode){
             return res.status(401).json({
                 success : false ,
@@ -20,6 +21,7 @@ exports.isAuthanticated = async(req,res,next)=>{
         req.userId = decode.userId ;
         next();
     } catch (error) {
+        console.log(error.message)
         return res.status(400).json({
             success : false ,
             message : "Something Went Wrong While Validating Token"
