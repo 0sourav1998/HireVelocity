@@ -79,7 +79,7 @@ exports.findAllJob = async (req, res) => {
       });
     }
     return res.status(200).json({
-      succes: true,
+      success : true,
       job,
     });
   } catch (error) {
@@ -92,8 +92,11 @@ exports.findAllJob = async (req, res) => {
 
 exports.findJobById = async (req, res) => {
   try {
+    console.log("Inside............",req.body)
     const jobId = req.params.id;
-    const job = await Job.findById(jobId);
+    console.log(jobId)
+    const job = await Job.findById(jobId).populate({path:"applications",populate : {path : "applicant"}}).exec();
+    console.log("job",job)
     if (!job) {
       return res.status(404).json({
         success: false,

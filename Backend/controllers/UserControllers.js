@@ -80,6 +80,7 @@ exports.login = async (req, res) => {
         phoneNumber: existingUser.phoneNumber,
         role: existingUser.role,
         profile: existingUser.profile,
+        jobsApplied : existingUser.jobsApplied
       };
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "1d",
@@ -103,25 +104,13 @@ exports.login = async (req, res) => {
     });
   }
 };
-
-exports.logout = async (req, res) => {
-  try {
-    return res.status(200).cookie("token", "", { maxAge: 0 }).json({
-      success: true,
-      message: "Logged Out Successfully",
-    });
-  } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: "Something Went Wrong while Logging out",
-    });
-  }
-};
-
 exports.updateProfile = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, bio, skills } = req.body;
-    const file = req.files;
+    let file ;
+    if(req.files){
+      file = req.files.file;
+    }
     let skillsArray;
     if (skills) {
       skillsArray = skills.split(",");
@@ -133,6 +122,11 @@ exports.updateProfile = async (req, res) => {
         success: false,
         msessage: "User Not Found",
       });
+    }
+    if(file){
+      const My_resume = await uploadImageToCloudinary(file,process.env.FOLDER_NAME)
+      console.log("My Resume",My_resume)
+      user.profile.resume = My_resume.secure_url
     }
     if (fullName) {
       user.fullName = fullName;
@@ -156,6 +150,7 @@ exports.updateProfile = async (req, res) => {
       user,
     });
   } catch (error) {
+    console.log(error.message)
     return res.status(400).json({
       success: false,
       message: "Something Went Wrong while Updating Profile",

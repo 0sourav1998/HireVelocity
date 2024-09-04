@@ -6,6 +6,8 @@ import Job from "./components/Jobs/JobIndex";
 import Browse from "./components/Browse/Browse";
 import Profile from "./components/Profile";
 import JobDescription from "./components/JobDescription";
+import Companies from "./components/admin/Companies";
+import CreateCompany from "./components/admin/CreateCompany";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route element={<JobDescription/>} path="/jobs/description/:id" />
         <Route element={<Browse/>} path="/browse" />
         <Route element={<Profile/>} path="/link" />
+        <Route element={<Companies/>} path="/admin/companies"/>
+        <Route element={<CreateCompany/>} path="/admin/comapanies/createCompany"/>
       </Routes>
     </div>
   );

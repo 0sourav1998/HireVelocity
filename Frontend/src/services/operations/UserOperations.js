@@ -34,6 +34,9 @@ export const login =(body,navigate)=>{
       console.log(response)
       if(response?.data?.success){
         navigate("/");
+        // sessionStorage.setItem("userWithAppliedJob",JSON.stringify(response?.data?.))
+        sessionStorage.setItem("user",JSON.stringify(response?.data?.existingUser))
+        sessionStorage.setItem("token",JSON.stringify(response?.data?.token))
         dispatch(setUser(response?.data?.existingUser))
         dispatch(setToken(response?.data?.token))
         toast.success("Welcome Back");

@@ -6,7 +6,7 @@ const {isAuthanticated} = require("../middlewares/isAuthanticated")
 
 router.post("/createJob",isAuthanticated,createJob);
 router.get("/findAllJob",findAllJob);
-router.get("/findJobById/:id",findJobById);
+router.post("/findJobById/:id",findJobById);
 router.post("/findAdminJobs",isAuthanticated,findAdminJobs)
 
 module.exports = router;

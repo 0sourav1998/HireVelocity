@@ -28,7 +28,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     setInput({...input , [e.target.name] : e.target.value })
   }
   const changeFileHandler=(e)=>{
-    setInput({...input , file : e.target.values[0]})
+    setInput({...input , file : e.target.files[0]})
   }
 
   const handleFormSubmit =async(e)=>{
@@ -36,9 +36,10 @@ const UpdateProfile = ({ open, setOpen }) => {
     const formData = new FormData();
     formData.append("fullName",input.fullName)
     formData.append("email",input.email)
-    formData.append("phonenumber",input.phoneNumber);
+    formData.append("phoneNumber",input.phoneNumber);
     formData.append("bio",input.bio)
     formData.append("skills",input.skills)
+    formData.append("file",input?.file)
     try {
       const result = await updateProfileOp(formData,token);
       console.log(result)
@@ -79,7 +80,6 @@ const UpdateProfile = ({ open, setOpen }) => {
             <Input
               type="file"
               onChange={changeFileHandler}
-              value={input.file}
               accept="application/pdf"
               id="file"
               name="file"

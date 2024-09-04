@@ -63,6 +63,7 @@ const Profile = () => {
             <a
               target="blank"
               className="w-full cursor-pointer hover:underline text-blue-800"
+              href={user?.profile.resume}
             >
               Sourav Resume
             </a>

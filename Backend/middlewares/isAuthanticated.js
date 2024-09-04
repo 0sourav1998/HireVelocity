@@ -3,6 +3,7 @@ require("dotenv").config();
 
 exports.isAuthanticated = async(req,res,next)=>{
     try {
+        console.log("I am here")
         const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "") ;
         if(!token){
             return res.status(401).json({
