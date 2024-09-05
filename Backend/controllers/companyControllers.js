@@ -1,4 +1,6 @@
-const Company = require("../models/CompanyModel")
+const Company = require("../models/CompanyModel");
+const { uploadImageToCloudinary } = require("../utils/UploadImageToCloudinary");
+require("dotenv").config();
 
 exports.registerCompany = async(req,res)=>{
     try {
@@ -58,7 +60,7 @@ exports.getComapanies = async(req,res)=>{
 
 exports.getCompanyById = async(req,res)=>{
     try {
-        const companyId = req.params.id ;
+        const companyId = req.body.id ;
         if(!companyId){
             return res.status(400).json({
                 success : false ,
@@ -87,17 +89,27 @@ exports.getCompanyById = async(req,res)=>{
 
 exports.updateCompany = async(req,res)=>{
     try {
-        const companyId = req.params.id ;
-        const {name , description , location , website} = req.body;
-        // const file = req.files.file ;
-        const companyUpdate = {name , description , location , website}
-        const company = await Company.findByIdAndUpdate(companyId,companyUpdate,{new : true});
+        const userId = req.userId;
+        const {description , location , website , companyId} = req.body;
+        const file = req.files.file ;
+        console.log(description , location , website , companyId,file)
+        let response ;
+        if(file){
+            response = await uploadImageToCloudinary(file,process.env.FOLDER_NAME)
+        }
+        const company = await Company.findById(companyId);
         if(!company){
             return res.status(404).json({
                 success : false ,
                 message : "Company Not Found"
             })
         }
+        company.description = description ;
+        company.location = location ;
+        company.website = website ;
+        company.logo = response.secure_url;
+        company.userId = userId ;
+        await company.save();
         return res.status(200).json({
             success : true ,
             message : "Company Details Updated Successfully",

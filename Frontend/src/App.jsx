@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import JobDescription from "./components/JobDescription";
 import Companies from "./components/admin/Companies";
 import CreateCompany from "./components/admin/CreateCompany";
+import SetCompanyInfo from "./components/admin/SetCompanyInfo";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route element={<Profile/>} path="/link" />
         <Route element={<Companies/>} path="/admin/companies"/>
         <Route element={<CreateCompany/>} path="/admin/comapanies/createCompany"/>
+        <Route element={<SetCompanyInfo/>} path="/companies/setInfo/:id"/>
       </Routes>
     </div>
   );

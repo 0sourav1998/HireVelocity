@@ -18,3 +18,10 @@ export const jobEndPoints = {
 export const applicationEndPoints = {
   APPLY_JOB : `${BASE_URL}/api/v1/application/applyJobb`
 }
+
+export const companyEndPoints = {
+  CREATE_COMPANY : `${BASE_URL}/api/v1/company/register`,
+  UPDATE_COMPANY_DETAILS : `${BASE_URL}/api/v1/company/updateCompany`,
+  GET_ALL_COMPANIES : `${BASE_URL}/api/v1/company/getComapanies`,
+  GET_COMPANY_BY_ID : `${BASE_URL}/api/v1/company/getCompany`
+}

@@ -6,7 +6,7 @@ const {isAuthanticated} = require("../middlewares/isAuthanticated")
 
 router.post("/register",isAuthanticated,registerCompany);
 router.post("/getComapanies",isAuthanticated,getComapanies);
-router.post("/getCompany/:id",isAuthanticated,getCompanyById);
-router.put("/updateCompany/:id",isAuthanticated,updateCompany)
+router.post("/getCompany",isAuthanticated,getCompanyById);
+router.put("/updateCompany",isAuthanticated,updateCompany)
 
 module.exports = router;
