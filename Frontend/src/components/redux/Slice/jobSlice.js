@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     allJobs : null ,
-    singleJob : sessionStorage.getItem("job") ? JSON.parse(sessionStorage.getItem("job")) :  null 
+    singleJob : sessionStorage.getItem("job") ? JSON.parse(sessionStorage.getItem("job")) :  null ,
+    adminJobs : sessionStorage.getItem("adminJobs") ? JSON.parse(sessionStorage.getItem("adminJobs")) : null ,
+    searchJob : "" 
 }
 
 const jobSlice = createSlice({
@@ -14,9 +16,15 @@ const jobSlice = createSlice({
         },
         setSingleJob : (state,action)=>{
             state.singleJob = action.payload;
+        },
+        setAdminJobs : (state,action)=>{
+            state.adminJobs = action.payload
+        } ,
+        setSearchJob : (state,action)=>{
+            state.searchJob = action.payload
         }
     }
 })
 
-export const {setAllJobs , setSingleJob} = jobSlice.actions ;
+export const {setAllJobs , setSingleJob , setAdminJobs,setSearchJob} = jobSlice.actions ;
 export default jobSlice.reducer;

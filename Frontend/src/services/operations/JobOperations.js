@@ -3,7 +3,7 @@ import { apiConnector } from "../apiConnector"
 import {jobEndPoints} from "../apis" 
 import { useSelector } from "react-redux"
 
-const {GET_ALL_JOBS , GET_JOB_BY_JOBID} = jobEndPoints
+const {GET_ALL_JOBS , GET_ADMIN_JOBS , CREATE_JOB} = jobEndPoints
 
 
 export const getAllJobs = async()=>{
@@ -42,3 +42,35 @@ export const getAllJobs = async()=>{
 //     return result ;
 // }
 
+
+export const getJobsOfAdmin = async(token)=>{
+    let result ;
+    try {
+        const response = await apiConnector("POST",GET_ADMIN_JOBS,null,{
+            Authorization : `Bearer ${token}`
+        })
+        console.log("RESPONE",response)
+        if(response?.data?.success){
+            result = response?.data?.jobs
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+    return result
+}
+
+
+export const createJob = async(body,token)=>{
+    let result ;
+    try {
+        const response = await apiConnector("POST",CREATE_JOB , body , {
+            Authorization : `Bearer ${token}`
+        });
+        if(response?.data?.success){
+            result = response?.data?.createdJob
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+    return result ;
+}
