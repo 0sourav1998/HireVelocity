@@ -4,7 +4,6 @@ const User = require("../models/UserModel");
 
 exports.applyJob = async (req, res) => {
   try {
-    console.log("hiiiii")
     const userId = req.userId;
     const { jobId } = req.body;
     if (!jobId) {
@@ -89,7 +88,9 @@ exports.getAppliedJobs = async (req, res) => {
 //admin will show how much user has been applied to the job
 exports.getApplicants = async (req, res) => {
   try {
-    const jobId = req.params.id;
+    console.log("Here")
+    const jobId = req.body.id;
+    console.log("jobId",jobId)
     const job = await Job.findById(jobId).populate({
       path: "applications",
       options: { sort: { createdAt: -1 } },
@@ -97,6 +98,7 @@ exports.getApplicants = async (req, res) => {
         path: "applicant",
       },
     });
+    console.log(job)
     if (!job) {
       return res.status(404).json({
         message: "Job not found.",
@@ -114,8 +116,10 @@ exports.getApplicants = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
   try {
-    const applicationId = req.params.id;
+    console.log("HERERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr")
+    const applicationId = req.body.id;
     const { status } = req.body;
+    console.log(applicationId,status)
     if (!status) {
       return res.status(400).json({
         success: false,
@@ -129,7 +133,8 @@ exports.updateStatus = async (req, res) => {
         message: "Application not found",
       });
     }
-    (application.status = status), await application.save();
+    application.status = status, 
+    await application.save();
     return res.status(200).json({
       success: true,
       message: "Status Updated",

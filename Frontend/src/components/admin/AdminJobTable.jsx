@@ -75,6 +75,13 @@ const AdminJobTable = () => {
                                                 <Edit2 className="w-4 h-4" />
                                                 <span>Edit</span>
                                             </div>
+                                            <div
+                                                className="flex gap-2 items-center hover:bg-gray-100 p-2 rounded cursor-pointer"
+                                                onClick={() => navigate(`/jobs/${job._id}/applicants`)}
+                                            >
+                                                <Edit2 className="w-4 h-4" />
+                                                <span>Applicants</span>
+                                            </div>
                                         </PopoverContent>
                                     </Popover>
                                 </TableCell>

@@ -23,6 +23,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.2.0",
     "express-fileupload": "^1.5.1",
+    "framer-motion": "^11.5.4",
     "lucide-react": "^0.437.0",
     "next-themes": "^0.3.0",
     "path": "^0.12.7",

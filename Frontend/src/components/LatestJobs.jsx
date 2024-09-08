@@ -1,8 +1,10 @@
 import React from 'react'
 import LatestJobLists from './LatestJobLists'
 import { useSelector } from 'react-redux'
+import useGetAllJobs from './hooks/useGetAllJobs';
 
 const LatestJobs = () => {
+  useGetAllJobs();
   const allJobs = useSelector((state)=>state.job.allJobs)
   return (
     <div className='max-w-7xl mx-auto my-20'>

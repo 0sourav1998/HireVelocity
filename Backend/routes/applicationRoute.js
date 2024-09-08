@@ -6,8 +6,8 @@ const {applyJob, getAppliedJobs, getApplicants, updateStatus} = require("../cont
 
 router.post("/applyJobb",isAuthanticated,applyJob);
 router.get("/getAppliedJobs",isAuthanticated,getAppliedJobs);
-router.get("/applicants/:id",isAuthanticated,getApplicants);
-router.put("/updateStatus/:id",isAuthanticated,updateStatus)
+router.post("/applicants",isAuthanticated,getApplicants);
+router.put("/updateStatus",isAuthanticated,updateStatus)
 
 
 module.exports = router ;

@@ -1,13 +1,13 @@
 import { toast } from "sonner"
 import { apiConnector } from "../apiConnector"
 import {jobEndPoints} from "../apis" 
-import { useSelector } from "react-redux"
+import { applicationEndPoints } from "../apis"
 
-const {GET_ALL_JOBS , GET_ADMIN_JOBS , CREATE_JOB} = jobEndPoints
+const {GET_ALL_JOBS , GET_ADMIN_JOBS , CREATE_JOB } = jobEndPoints
+const {GET_APPLIED_JOBS} = applicationEndPoints;
 
 
 export const getAllJobs = async()=>{
-    const toastId = toast.loading("Loading...")
     let result ;
     try {
         const response = await apiConnector("GET",GET_ALL_JOBS)
@@ -20,27 +20,10 @@ export const getAllJobs = async()=>{
     } catch (error) {
         console.log(error.message)
         toast.error("Failed To get Jobs")
-    }finally{
-        toast.dismiss(toastId)
     }
     return result ;
 }
 
-// export const fetchJobById = async(body)=>{
-//     const jobId = useSelector((state)=>state.job.singleJob._id)
-//     console.log("BODY",body)
-//     let result ;
-//     try {
-//         const response = await apiConnector("POST",`GET_JOB_BY_JOBID/`,body)
-//         console.log("Rsponse",response)
-//         if(response?.data?.success){
-//             result = response?.data?.job;
-//         }
-//     } catch (error) {
-//         console.log(error.message)
-//     }
-//     return result ;
-// }
 
 
 export const getJobsOfAdmin = async(token)=>{
@@ -68,6 +51,22 @@ export const createJob = async(body,token)=>{
         });
         if(response?.data?.success){
             result = response?.data?.createdJob
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+    return result ;
+}
+
+export const appliedJobsForStudents = async(token)=>{
+    let result ;
+    try {
+        const response = await apiConnector("GET",GET_APPLIED_JOBS,null ,{
+            Authorization : `Bearer ${token}`
+        })
+        console.log(response)
+        if(response?.data?.success){
+            result = response?.data?.appliedJobs
         }
     } catch (error) {
         console.log(error.message)

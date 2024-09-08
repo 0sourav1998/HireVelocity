@@ -4,16 +4,13 @@ import { Bookmark } from 'lucide-react'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Badge } from '../ui/badge'
 import { useNavigate, useParams } from 'react-router-dom'
-import useGetAllJobs from '../hooks/useGetAllJobs'
 
 
 const Job = ({job}) => {
-  useGetAllJobs();
   const getDateFunction = (date)=>{
     const createdAtDate = new Date(date);
     const todayDate = new Date();
     const diff = todayDate - createdAtDate;
-    console.log(diff)
     return Math.floor(diff/(1000*24*60*60)) ;
   }
   const navigate = useNavigate();
@@ -25,7 +22,7 @@ const Job = ({job}) => {
       </div>
       <div className='flex gap-4'>
         <Avatar>
-            <AvatarImage src="https://tse4.mm.bing.net/th?id=OIP.2AmwrTnE_ys6QNCFe6iKRwHaHa&pid=Api&P=0&h=180"/>
+            <AvatarImage src={job?.company?.logo}/>
         </Avatar>
         <div>
           <h1 className='font-medium text-lg'>{job?.company?.name}</h1>

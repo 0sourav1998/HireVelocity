@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group'
 import { Label } from '../ui/label'
+import { useDispatch } from 'react-redux';
+import { setFilterGroup } from '../redux/Slice/jobSlice';
 
 const FilterJob = () => {
+    const [selectedValue , setSelectedValue] = useState("");
+    const dispatch = useDispatch();
+    const handleValueChange = (value)=>{
+        setSelectedValue(value)
+    }
+    useEffect(()=>{
+        dispatch(setFilterGroup(selectedValue))
+    },[selectedValue])
     const filteredData = [
         {
             type : "Location" ,
@@ -10,7 +20,7 @@ const FilterJob = () => {
         } ,
         {
             type : "Industry" ,
-            array : ["Frontend Developer" , "Backend Deveoper" , "Mern Developer" , "Devops Engineer" , "Graphics Designeer"]
+            array : ["Frontend Developer" , "Backend Developer" , "Mern Developer" , "Devops Engineer" , "Graphics Designeer"]
         },
         {
             type : "Salary",
@@ -21,7 +31,7 @@ const FilterJob = () => {
     <div>
         <h1 className='text-xl font-bold'>Filter Jobs</h1>
         <hr className='mt-3'/>
-      <RadioGroup>
+      <RadioGroup value={selectedValue} onValueChange={handleValueChange}>
         {
             filteredData.map((data,index)=>(
                 <div key={index} className='mb-4 mt-3'>

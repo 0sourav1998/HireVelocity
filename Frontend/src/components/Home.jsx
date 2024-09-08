@@ -9,7 +9,6 @@ import useGetAllJobs from "./hooks/useGetAllJobs";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  useGetAllJobs();
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   useEffect(() => {

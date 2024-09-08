@@ -11,6 +11,10 @@ import CreateCompany from "./components/admin/CreateCompany";
 import SetCompanyInfo from "./components/admin/SetCompanyInfo";
 import AdminJobs from "./components/admin/AdminJobs";
 import CreateJob from "./components/admin/CreateJob";
+import Applicants from "./components/admin/Applicants";
+import { ProtectedRoute } from "./components/admin/ProtectedRoute";
+import { ProtectedRouteForStudents } from "./components/ProtectedRouteForStudents";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
@@ -19,15 +23,18 @@ function App() {
         <Route element={<Home />} path="/" />
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
-        <Route element={<Job/>} path="/jobs" />
-        <Route element={<JobDescription/>} path="/jobs/description/:id" />
-        <Route element={<Browse/>} path="/browse" />
-        <Route element={<Profile/>} path="/link" />
-        <Route element={<Companies/>} path="/admin/companies"/>
-        <Route element={<CreateCompany/>} path="/admin/comapanies/createCompany"/>
-        <Route element={<SetCompanyInfo/>} path="/companies/setInfo/:id"/>
-        <Route element={<AdminJobs/>} path="/admin/jobs"/>
-        <Route element={<CreateJob/>} path="/admin/jobs/createJob"/>
+        <Route element={<ProtectedRouteForStudents><Job/></ProtectedRouteForStudents>} path="/jobs" />
+        <Route element={<ProtectedRouteForStudents><JobDescription/></ProtectedRouteForStudents>} path="/jobs/description/:id" />
+        <Route element={<ProtectedRouteForStudents><Browse/></ProtectedRouteForStudents>} path="/browse" />
+        <Route element={<ProtectedRouteForStudents><Profile/></ProtectedRouteForStudents>} path="/link" />
+
+        <Route element={<ProtectedRoute><Companies/></ProtectedRoute>} path="/admin/companies"/>
+        <Route element={<ProtectedRoute><CreateCompany/></ProtectedRoute>} path="/admin/comapanies/createCompany"/>
+        <Route element={<ProtectedRoute><SetCompanyInfo/></ProtectedRoute>} path="/companies/setInfo/:id"/>
+        <Route element={<ProtectedRoute><AdminJobs/></ProtectedRoute>} path="/admin/jobs"/>
+        <Route element={<ProtectedRoute><CreateJob/></ProtectedRoute>} path="/admin/jobs/createJob"/>
+        <Route element={<ProtectedRoute><Applicants/></ProtectedRoute>} path="/jobs/:id/applicants" />
+        <Route element={<PageNotFound/>} path="*" />
       </Routes>
     </div>
   );

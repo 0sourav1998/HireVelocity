@@ -58,20 +58,7 @@ exports.createJob = async (req, res) => {
 
 exports.findAllJob = async (req, res) => {
   try {
-    const keyword = req.query.keyword || "";
-    const query = {
-      $or: [
-        {
-          title: { $regex: keyword, $options: "i" },
-        },
-        {
-          description: { $regex: keyword, $options: "i" },
-        },
-      ],
-    };
-    const jobRes = await Job.findOne({}).populate("company");
-    console.log(jobRes)
-    const job = await Job.find(query).populate("company").sort({createdAt:-1});
+    const job = await Job.find({}).populate("company").sort({createdAt:-1});
     if (!job) {
       return res.status(404).json({
         success: false,
@@ -89,6 +76,50 @@ exports.findAllJob = async (req, res) => {
     });
   }
 };
+
+exports.findAllJobByKeyword = async (req, res) => {
+  try {
+    const keyword = req.query.keyword;
+
+    if (!keyword || keyword.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Keyword is required for searching jobs",
+      });
+    }
+    const query = {
+      $or: [
+        {
+          title: { $regex: keyword, $options: "i" },
+        },
+        {
+          description: { $regex: keyword, $options: "i" },
+        },
+      ],
+    };
+    const job = await Job.find(query).populate("company").sort({ createdAt: -1 });
+
+    console.log(job)
+
+    if (job.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No results found",
+      });
+    }
+    
+    return res.status(200).json({
+      success: true,
+      job,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: "Something went wrong while finding the job",
+    });
+  }
+};
+
 
 exports.findJobById = async (req, res) => {
   try {

@@ -11,6 +11,7 @@ export const userEndPoints = {
 
 export const jobEndPoints = {
   GET_ALL_JOBS : `${BASE_URL}/api/v1/job/findAllJob`,
+  GET_JOB_BY_KEYWORD : `${BASE_URL}/api/v1/job/findAllJobByKeyword`,
   GET_JOB_BY_JOBID : `${BASE_URL}/api/v1/job/findJobById` ,
   GET_ADMIN_JOBS : `${BASE_URL}/api/v1/job/findAdminJobs` ,
   CREATE_JOB : `${BASE_URL}/api/v1/job/createJob`
@@ -18,7 +19,10 @@ export const jobEndPoints = {
 
 
 export const applicationEndPoints = {
-  APPLY_JOB : `${BASE_URL}/api/v1/application/applyJobb`
+  APPLY_JOB : `${BASE_URL}/api/v1/application/applyJobb` ,
+  GET_APPLICANTS : `${BASE_URL}/api/v1/application/applicants` ,
+  UPDATE_STATUS : `${BASE_URL}/api/v1/application/updateStatus` ,
+  GET_APPLIED_JOBS : `${BASE_URL}/api/v1/application/getAppliedJobs`
 }
 
 export const companyEndPoints = {

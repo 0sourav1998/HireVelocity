@@ -33,7 +33,7 @@ const Navbar = () => {
     <div className="bg-white">
       <div className="flex items-center justify-between max-w-7xl mx-auto h-16">
         <div>
-          <h1 className="text-2xl font-bold">
+          <h1 onClick={()=>navigate("/")} className="text-2xl font-bold cursor-pointer">
             Hire<span className="text-[#F83002]">Velocity</span>
           </h1>
         </div>
