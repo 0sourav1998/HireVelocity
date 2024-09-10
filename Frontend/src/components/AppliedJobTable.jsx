@@ -32,18 +32,18 @@ const AppliedJobTable = () => {
   }, [user._id]);
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="sm:container w-[100%] mx-auto sm:p-6 p-0">
       <div className="bg-white shadow-lg rounded-lg overflow-hidden">
         <Table>
-          <TableCaption className="text-lg font-semibold text-gray-800 mb-6">
+          <TableCaption className="sm:text-lg text-xs font-semibold text-gray-800 sm:mb-6 mb-2">
             Your Applied Jobs
           </TableCaption>
-          <TableHeader className="bg-gray-200 text-gray-700 text-sm">
+          <TableHeader className="bg-gray-200 text-gray-700 sm:text-sm text-xs">
             <TableRow>
-              <TableHead className="py-4">Date</TableHead>
-              <TableHead className="py-4">Company</TableHead>
-              <TableHead className="py-4">Job Role</TableHead>
-              <TableHead className="py-4 text-right">Status</TableHead>
+              <TableHead className="sm:py-4 py-2">Date</TableHead>
+              <TableHead className="sm:py-4 py-2">Company</TableHead>
+              <TableHead className="sm:py-4 py-2">Title</TableHead>
+              <TableHead className="sm:py-4 py-2 text-right">Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="divide-y divide-gray-200">
@@ -52,16 +52,16 @@ const AppliedJobTable = () => {
                 key={index}
                 className="hover:bg-gray-100 transition duration-300"
               >
-                <TableCell className="py-4 px-6">
+                <TableCell className="sm:px-4 sm:py-6 px-2 py-3">
                   {appliedJob?.createdAt.split("T")[0]}
                 </TableCell>
-                <TableCell className="py-4 px-6">
+                <TableCell className="sm:px-4 sm:py-6 px-2 py-3">
                   {appliedJob?.job?.company?.name}
                 </TableCell>
-                <TableCell className="py-4 px-6">
+                <TableCell className="sm:px-4 sm:py-6 px-4 py-3">
                   {appliedJob?.job?.title}
                 </TableCell>
-                <TableCell className="py-4 px-6 text-right">
+                <TableCell className="sm:px-4 sm:py-6 px-2 py-3 text-right">
                   <Badge
                     className={`${
                       appliedJob?.status === "Accept"
@@ -69,7 +69,7 @@ const AppliedJobTable = () => {
                         : appliedJob.status === "Reject"
                         ? "bg-red-500"
                         : "bg-gray-500"
-                    } text-white px-4 py-1 rounded-full`}
+                    } text-white sm:px-4 sm:py-2 px-2 py-1 rounded-full`}
                   >
                     {appliedJob?.status}
                   </Badge>

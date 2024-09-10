@@ -3,7 +3,6 @@ require("dotenv").config();
 
 exports.isAuthanticated = async(req,res,next)=>{
     try {
-        console.log("I am here")
         const token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "") ;
         if(!token){
             return res.status(401).json({
@@ -12,7 +11,6 @@ exports.isAuthanticated = async(req,res,next)=>{
             })
         }
         const decode = jwt.verify(token,process.env.JWT_SECRET);
-        console.log("Decode",decode)
         if(!decode){
             return res.status(401).json({
                 success : false ,

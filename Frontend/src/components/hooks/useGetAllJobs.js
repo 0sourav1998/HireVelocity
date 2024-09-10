@@ -10,7 +10,6 @@ const useGetAllJobs = () => {
             const result = await getAllJobs();
             sessionStorage.setItem("allJobs",JSON.stringify(result))
             dispatch(setAllJobs(result))
-            console.log(result)
         } catch (error) {
             console.log(error)
         }

@@ -73,7 +73,7 @@ const CompanyTable = () => {
                                         <PopoverContent className="bg-white p-2 rounded-md shadow-lg">
                                             <div
                                                 className="flex gap-2 items-center hover:bg-gray-100 p-2 rounded cursor-pointer"
-                                                onClick={() => navigate(`/companies/setInfo/${company._id}`)}
+                                                onClick={() => navigate(`/companies/edit/${company._id}`)}
                                             >
                                                 <Edit2 className="w-4 h-4" />
                                                 <span>Edit</span>

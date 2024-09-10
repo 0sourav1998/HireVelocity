@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     applicants : sessionStorage.getItem("applicants") ? JSON.parse(sessionStorage.getItem("applicants")) : [] ,
-    
+    status : sessionStorage.getItem("status") ? JSON.parse(sessionStorage.getItem("setStatus")) : []
 }
 
 const applicationslice = createSlice({
@@ -11,9 +11,12 @@ const applicationslice = createSlice({
     reducers : {
         setApplicants : (state,action)=>{
             state.applicants = action.payload
+        },
+        setStatus : (state,action)=>{
+            state.status = action.payload
         }
     }
 })
 
-export const {setApplicants} = applicationslice.actions ;
+export const {setApplicants , setStatus} = applicationslice.actions ;
 export default applicationslice.reducer ;

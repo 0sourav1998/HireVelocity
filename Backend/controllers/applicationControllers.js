@@ -44,16 +44,14 @@ exports.applyJob = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "Someting Went Wrong",
+      message: "Something Went Wrong",
     });
   }
 };
 
 exports.getAppliedJobs = async (req, res) => {
   try {
-    console.log("Inside Appled Job");
     const userId = req.userId;
-    console.log(userId);
     const appliedJobs = await Applications.find({ applicant: userId })
       .sort({ createdAt: -1 })
       .populate({
@@ -64,7 +62,6 @@ exports.getAppliedJobs = async (req, res) => {
           options: { sort: { createdAt: -1 } },
         },
       });
-    console.log(appliedJobs);
     if (!appliedJobs) {
       return res.status(404).json({
         success: false,
@@ -80,7 +77,7 @@ exports.getAppliedJobs = async (req, res) => {
   } catch (error) {
     return res.status(400).json({
       success: false,
-      message: "Someting Went Wrong While Fetching Applied Jobs",
+      message: "Something Went Wrong While Fetching Applied Jobs",
     });
   }
 };
@@ -107,7 +104,7 @@ exports.getApplicants = async (req, res) => {
     }
     return res.status(200).json({
       job,
-      succees: true,
+      success: true,
     });
   } catch (error) {
     console.log(error);
@@ -116,7 +113,6 @@ exports.getApplicants = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
   try {
-    console.log("HERERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRr")
     const applicationId = req.body.id;
     const { status } = req.body;
     console.log(applicationId,status)

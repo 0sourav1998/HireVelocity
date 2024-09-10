@@ -12,7 +12,6 @@ const useGetSearchedJob = () => {
     const searchedJobsByKeyword = async()=>{
         try {
             const result = await axios.get(`${GET_JOB_BY_KEYWORD}?keyword=${searchText}`);
-            console.log(result)
             dispatch(setSearchedJob(result?.data?.job))
             sessionStorage.setItem("searchedJob",JSON.stringify(result?.data?.job))
         } catch (error) {

@@ -16,18 +16,17 @@ const HeroSection = () => {
   return (
     <div className="text-center">
       <div className="flex flex-col gap-y-5">
-        <span className="px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium mx-auto">
+        <span className="sm:px-4 sm:py-2 px-4 py-1 rounded-full bg-gray-100 text-[#F83002] font-medium mt-4 mx-auto">
           No.1 Job Site
         </span>
-        <h1 className="text-4xl font-bold">
+        <h1 className="sm:text-4xl sm:font-bold text-2xl font-semibold">
           Search , Apply &{" "}
           <span className="text-[#6A3AC2]">Get Your Dream Job</span>
         </h1>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-          eveniet in alias. Veniam, voluptatum vitae.
+        Find your dream job with ease on our portal, connecting top talent with the best opportunities in every industry.
         </p>
-        <div className="flex items-center w-[40%] mx-auto shadow-lg shadow-gray-200 gap-2">
+        <div className="flex items-center sm:w-[40%] w-[95%] mx-auto shadow-lg shadow-gray-200 gap-2">
           <input
             placeholder="Find Your Dream Job"
             type="text"

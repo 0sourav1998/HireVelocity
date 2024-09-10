@@ -5,6 +5,7 @@ import Job from "./Job";
 import { useSelector } from "react-redux";
 import useGetAllJobs from "../hooks/useGetAllJobs";
 import { motion } from "framer-motion";
+import Footer from "../shared/Footer";
 
 const JobIndex = () => {
   useGetAllJobs();
@@ -29,16 +30,16 @@ const JobIndex = () => {
   return (
     <div>
       <Navbar />
-      <div className="mt-5 max-w-7xl mx-auto">
-        <div className="flex gap-5">
-          <div className="w-[20%]">
+      <div className="mt-5 max-w-7xl mx-auto sm:mb-10 mb-5">
+        <div className="flex sm:gap-5 gap-2">
+          <div className="sm:w-[20%] w-[35%]">
             <FilterJob />
           </div>
           {jobs?.length === 0 ? (
             <span>No Jobs Found</span>
           ) : (
-            <div className="flex-1 h-[88vh] overflow-y-auto mb-5">
-              <div className="grid grid-cols-3 gap-4">
+            <div className="flex-1 h-[88vh] overflow-y-auto mb-5 sm:ml-0 ml-1.5">
+              <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 mb-4">
                 {filteredJobs?.map((job, index) => (
                   <motion.div
                     key={index}
@@ -55,6 +56,7 @@ const JobIndex = () => {
           )}
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

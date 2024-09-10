@@ -8,7 +8,6 @@ const useGetAdminJob = () => {
     const dispatch = useDispatch();
     const adminJobs = async()=>{
         const result = await getJobsOfAdmin(token);
-        console.log(result)
         dispatch(setAdminJobs(result))
     }
     useEffect(()=>{

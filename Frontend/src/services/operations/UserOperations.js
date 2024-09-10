@@ -6,7 +6,6 @@ import { setLoading, setToken, setUser } from "@/components/redux/Slice/authslic
 const { SIGNUP , LOGIN , UPDATE_PROFILE} = userEndPoints;
 
 export const signup = async (body,navigate) => {
-    console.log(body)
   let result;
   try {
     const response = await apiConnector("POST", SIGNUP, body, {

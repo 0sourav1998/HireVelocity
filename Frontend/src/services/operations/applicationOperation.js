@@ -46,7 +46,7 @@ export const jobResponse = async(body,token)=>{
         })
         console.log(response)
         if(response?.data?.success){
-            result = response?.data?.application
+            result = response?.data?.application?.status
         }
     } catch (error) {
         console.log(error.message)

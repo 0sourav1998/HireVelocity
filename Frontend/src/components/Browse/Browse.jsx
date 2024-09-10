@@ -4,6 +4,7 @@ import Job from "../Jobs/Job";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchedJob, setSearchText } from "../redux/Slice/jobSlice";
 import useGetSearchedJob from "../hooks/useGetSearchedJobs";
+import Footer from "../shared/Footer";
 
 const Browse = () => {
   useGetSearchedJob();
@@ -19,11 +20,11 @@ const Browse = () => {
   return (
     <div>
       <Navbar />
-      <div className="max-w-7xl mx-auto mt-6">
+      <div className="ml-2 max-w-7xl mx-auto mt-6">
         <h1 className="text-2xl font-bold">
           Search Results ({searchedJob?.length || 0})
         </h1>
-        <div className="grid grid-cols-3 gap-4 mt-5 mb-5">
+        <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 mt-5 mb-5">
           {searchedJob?.map((job, index) => (
             <Job key={index} job={job} />
           ))}

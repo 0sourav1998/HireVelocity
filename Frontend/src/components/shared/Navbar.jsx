@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { LogOut, User2 } from "lucide-react";
+import {
+  Bookmark,
+  BookmarkCheck,
+  BookmarkXIcon,
+  LogOut,
+  LucideBookmark,
+  User2,
+} from "lucide-react";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { userEndPoints } from "../../services/apis";
-import axios from "axios";
 import { setToken, setUser } from "../redux/Slice/authslice";
 import { toast } from "sonner";
 
 const Navbar = () => {
   const dispatch = useDispatch();
-  const { LOGOUT } = userEndPoints;
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+
   const handleLogout = async () => {
-    const toastId = toast.loading("Loading...");
     try {
       dispatch(setUser(null));
       dispatch(setToken(null));
@@ -25,81 +29,96 @@ const Navbar = () => {
     } catch (error) {
       console.log(error.message);
       toast.error("Failed");
-    } finally {
-      toast.dismiss(toastId);
     }
   };
+
   return (
-    <div className="bg-white">
-      <div className="flex items-center justify-between max-w-7xl mx-auto h-16">
-        <div>
-          <h1 onClick={()=>navigate("/")} className="text-2xl font-bold cursor-pointer">
+    <div className="bg-white shadow-lg sticky top-0 z-50 sm:mb-10 mb-2">
+      <div className="flex items-center sm:justify-between justify-center max-w-7xl w-full mx-auto sm:h-16 h-24 px-6 sm:px-8 lg:px-10">
+        <div className="flex items-center sm:space-x-4 space-x-1">
+          <h1
+            onClick={() => navigate("/")}
+            className="hidden sm:block sm:text-2xl text-lg sm:font-bold font-semibold cursor-pointer"
+          >
             Hire<span className="text-[#F83002]">Velocity</span>
           </h1>
         </div>
-        <div className="flex gap-4 h-14 items-center">
-          <div>
-            <ul className="flex justify-between gap-5">
-              {user?.role === "recruiter" ? (
-                <>
-                  <li>
-                    <Link to="/admin/companies">Companies</Link>
+        <div className="flex sm:gap-6 gap-4 items-center">
+          <ul className="flex justify-between sm:gap-5 gap-4">
+            {user?.role === "recruiter" ? (
+              <>
+                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                  <Link to="/admin/companies">Companies</Link>
+                </li>
+                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                  <Link to="/admin/jobs">Jobs</Link>
+                </li>
+              </>
+            ) : (
+              <div className="flex gap-4 mr-2">
+                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                  <Link to="/">Home</Link>
+                </li>
+                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                  <Link to="/jobs">Jobs</Link>
+                </li>
+                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                  <Link to="/browse">Browse</Link>
+                </li>
+                {user?.role === "student" && (
+                  <li className="cursor-pointer">
+                    <Link to="/bookmark">
+                      <Bookmark />
+                    </Link>
                   </li>
-                  <li>
-                    <Link to="/admin/jobs">Jobs</Link>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li>
-                    <Link to="/">Home</Link>
-                  </li>
-                  <li>
-                    <Link to="/jobs">Jobs</Link>
-                  </li>
-                  <li>
-                    <Link to="/browse">Browse</Link>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-          <div>
+                )}
+              </div>
+            )}
+          </ul>
+          <div className="flex items-center">
             {user ? (
               <Popover>
                 <PopoverTrigger asChild>
                   <Avatar className="cursor-pointer">
                     <AvatarImage
-                      src={user?.profile?.profilePhoto}
+                      src={
+                        user?.profile?.profilePhoto ||
+                        `https://api.dicebear.com/5.x/initials/svg?seed=${user?.fullName}`
+                      }
                       alt="@shadcn"
                     />
                   </Avatar>
                 </PopoverTrigger>
-                <PopoverContent className="w-80">
-                  <div className="flex gap-4 space-y-2">
+                <PopoverContent className="sm:w-80 w-50 sm:p-4 p-2 border rounded-lg shadow-lg bg-slate-600 text-white">
+                  <div className="flex gap-4 items-center">
                     <Avatar className="cursor-pointer">
                       <AvatarImage
-                        src={user?.profile?.profilePhoto}
+                        src={
+                          user?.profile?.profilePhoto ||
+                          `https://api.dicebear.com/5.x/initials/svg?seed=${user?.fullName}`
+                        }
                         alt="@shadcn"
                       />
                     </Avatar>
                     <div>
-                      <h4>{user?.fullName}</h4>
-                      <p className="text-sm text-gray-500">
+                      <h4 className="font-semibold sm:text-lg text-sm">
+                        {user?.fullName}
+                      </h4>
+                      <p className="text-sm text-gray-300">
                         {user?.profile?.bio}
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-col mt-2">
-                    {user && user?.role === "student" && (
-                      <div className="flex flex-row gap-4 items-center">
+                  <div className="flex flex-col sm:mt-4 mt-2">
+                    {user?.role === "student" && (
+                      <div className="flex flex-row sm:gap-4 gap-2 items-center">
                         <User2 />
                         <Link to="/link">
                           <Button variant="link">User Profile</Button>
                         </Link>
                       </div>
                     )}
-                    <div className="flex flex-row gap-4 items-center">
+                    <div className="flex flex-row sm:gap-4 gap-2 items-center sm:mt-2 mt-1">
                       <LogOut />
                       <Button onClick={handleLogout} variant="link">
                         Logout
@@ -109,16 +128,19 @@ const Navbar = () => {
                 </PopoverContent>
               </Popover>
             ) : (
-              <div className="flex items-center gap-3">
-                <Button variant="outline" onClick={() => navigate("/login")}>
+              <div className="flex sm:flex-row flex-col items-center gap-3">
+                <button
+                  className="bg-green-300 sm:text-lg text-sm rounded-md sm:px-2.5 px-2 sm:py-2 py-1 hover:bg-green-400 transition-all duration-200 hover:scale-105"
+                  onClick={() => navigate("/login")}
+                >
                   Login
-                </Button>
-                <Button
-                  className="text-white bg-[#6A38C2] hover:bg-[#4d1f9c] transition-all duration-200 hover:scale-95"
+                </button>
+                <button
+                  className="text-white sm:text-lg text-sm rounded-md sm:px-2.5 px-1 sm:py-2 py-1 bg-[#6A38C2] hover:bg-[#4d1f9c] transition-all duration-200 hover:scale-95"
                   onClick={() => navigate("/signup")}
                 >
                   Signup
-                </Button>
+                </button>
               </div>
             )}
           </div>

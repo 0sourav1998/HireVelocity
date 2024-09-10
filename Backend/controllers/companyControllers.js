@@ -1,5 +1,6 @@
 const Company = require("../models/CompanyModel");
 const { uploadImageToCloudinary } = require("../utils/UploadImageToCloudinary");
+const Job = require("../models/JobModel")
 require("dotenv").config();
 
 exports.registerCompany = async(req,res)=>{
@@ -15,7 +16,7 @@ exports.registerCompany = async(req,res)=>{
         if(company){
             return res.status(400).json({
                 success : false ,
-                message : "Upu Cannot Create Same Company"
+                message : "Cannot Create Same Company"
             })
         }
         const createdCompany = await Company.create({
@@ -60,6 +61,7 @@ exports.getComapanies = async(req,res)=>{
 
 exports.getCompanyById = async(req,res)=>{
     try {
+        const userId = req.userId ;
         const companyId = req.body.id ;
         if(!companyId){
             return res.status(400).json({
@@ -91,10 +93,9 @@ exports.updateCompany = async(req,res)=>{
     try {
         const userId = req.userId;
         const {description , location , website , companyId} = req.body;
-        const file = req.files.file ;
-        console.log(description , location , website , companyId,file)
         let response ;
-        if(file){
+        if(req.files){
+            const file = req.files.file ;
             response = await uploadImageToCloudinary(file,process.env.FOLDER_NAME)
         }
         const company = await Company.findById(companyId);
@@ -107,7 +108,9 @@ exports.updateCompany = async(req,res)=>{
         company.description = description ;
         company.location = location ;
         company.website = website ;
-        company.logo = response.secure_url;
+        if(response){
+            company.logo = response.secure_url;
+        }
         company.userId = userId ;
         await company.save();
         return res.status(200).json({
@@ -120,6 +123,24 @@ exports.updateCompany = async(req,res)=>{
         return res.status(400).json({
             success : false ,
             message : "Something Went Wrong While Updating Company Details"
+        })
+    }
+}
+
+exports.deleteCompany = async(req,res)=>{
+    try {
+        const {companyId} = req.body ;
+        await Company.findByIdAndDelete(companyId) 
+        await Job.deleteMany({company : companyId})
+        return res.status(200).json({
+            success : true ,
+            message  : "Company Deleted Successfully"
+        })
+    } catch (error) {
+        console.log(error.message)
+        return res.status(400).json({
+            success : false ,
+            message  : "Failed to delete the company"
         })
     }
 }

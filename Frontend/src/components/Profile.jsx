@@ -6,6 +6,7 @@ import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfile from "./UpdateProfile";
 import { useSelector } from "react-redux";
+import Footer from "./shared/Footer";
 
 const Profile = () => {
   const isHaveResume = true;
@@ -15,14 +16,14 @@ const Profile = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-8 my-10">
-        <div className="flex justify-between items-center gap-6">
-          <div className="flex items-center gap-6">
-            <Avatar className="h-24 w-24">
+      <div className="max-w-4xl sm:w-full w-[95%] mx-auto bg-white shadow-md rounded-lg sm:p-8 p-3 my-5 sm:my-10">
+        <div className="flex justify-between items-center sm:gap-6 gap-3">
+          <div className="flex items-center sm:gap-6 gap-3">
+            <Avatar className="sm:h-24 sm:w-24 h-12 w-12">
               <AvatarImage src="https://tse4.mm.bing.net/th?id=OIP.2AmwrTnE_ys6QNCFe6iKRwHaHa&pid=Api&P=0&h=180" />
             </Avatar>
             <div>
-              <h1 className="font-bold text-2xl text-gray-800">
+              <h1 className="sm:font-bold font-semibold sm:text-2xl text-sm text-gray-800">
                 {user?.fullName}
               </h1>
               <p className="text-gray-600 mt-1">
@@ -36,26 +37,26 @@ const Profile = () => {
             size={24}
           />
         </div>
-        <div className="mt-6">
-          <div className="flex items-center gap-4 text-gray-700">
+        <div className="sm:mt-6 mt-2">
+          <div className="flex items-center sm:gap-4 gap-1 text-gray-700">
             <Mail size={18} />
             <p>{user?.email}</p>
           </div>
-          <div className="flex items-center gap-4 text-gray-700 mt-2">
+          <div className="flex items-center sm:gap-4 gap-1 text-gray-700 mt-2">
             <Contact size={18} />
             <p>{user?.phoneNumber || "No phone number available"}</p>
           </div>
         </div>
-        <div className="mt-6">
-          <h1 className="text-xl font-semibold text-gray-800">Skills</h1>
+        <div className="sm:mt-6 mt-2">
+          <h1 className="xm:text-xl text-sm font-semibold text-gray-800">Skills</h1>
           {user?.profile?.skills.length === 0 ? (
-            <h3 className="text-gray-600 mt-2">N/A</h3>
+            <h3 className="text-gray-600 sm:mt-2 mt-1">N/A</h3>
           ) : (
-            <div className="flex flex-wrap gap-2 mt-3">
+            <div className="flex flex-wrap sm:gap-2 sm:mt-3 mt-1.5 gap-1">
               {user?.profile?.skills.map((skill, index) => (
                 <span
                   key={index}
-                  className="bg-blue-600 text-white rounded-full py-1 px-4 text-sm"
+                  className="bg-blue-600 text-white rounded-full sm:py-1 sm:px-4 px-2 py-1 xm:text-sm text-xs"
                 >
                   {skill}
                 </span>
@@ -63,12 +64,12 @@ const Profile = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-2 mt-6">
-          <Label className="font-bold text-lg text-gray-800">Resume</Label>
+        <div className="flex flex-col gap-2 sm:mt-6 mt-2">
+          <Label className="font-bold sm:text-lg text-sm text-gray-800">Resume</Label>
           {isHaveResume ? (
             <a
               target="blank"
-              className="w-full cursor-pointer hover:underline text-blue-600"
+              className="w-full cursor-pointer hover:underline text-blue-600 sm:text-normal text-xs"
               href={user?.profile?.resume}
             >
               {user?.fullName}'s Resume
@@ -78,11 +79,14 @@ const Profile = () => {
           )}
         </div>
       </div>
-      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+      <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg sm:p-6 p-2">
         <h1 className="text-xl font-semibold text-gray-800 mb-4">Applied Jobs</h1>
         <AppliedJobTable />
       </div>
       {open && <UpdateProfile open={open} setOpen={setOpen} />}
+      <div  className="sm:mt-10 mt-5">
+      <Footer/>
+      </div>
     </div>
   );
 };

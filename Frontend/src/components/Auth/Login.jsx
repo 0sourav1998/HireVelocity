@@ -26,19 +26,19 @@ const Login = () => {
     <div>
       <Navbar />
       <div className="flex justify-center items-center max-w-7xl mx-auto mb-10 mt-10">
-        <form className="w-1/2 border border-gray-200 rounded-md p-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-y-3 sm:w-1/2 w-[95%] border border-gray-200 rounded-md p-4 shadow-lg" onSubmit={handleSubmit}>
           <h1 className="text-center text-2xl font-semibold">Login</h1>
-          <div className="my-2">
-            <Label className="mb-1">Email</Label>
-            <Input type="text" placeholder="Enter Your Full Name" name="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+          <div>
+            <Label>Email</Label>
+            <Input className="mt-3" type="text" placeholder="Enter Your Full Name" name="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
           </div>
-          <div className="my-2">
-            <Label className="mb-1">Password</Label>
-            <Input type="password" placeholder="Enter Your Password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+          <div>
+            <Label>Password</Label>
+            <Input className="mt-3" type="password" placeholder="Enter Your Password" name="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
           </div>
           <div className="flex justify-between">
             <div>
-              <RadioGroup className="flex gap-4 mt-4">
+              <RadioGroup className="flex gap-8 mt-4">
                 <div className="flex items-center space-x-2">
                   <Input
                     type="radio"
@@ -65,7 +65,7 @@ const Login = () => {
             </div>
           </div>
           {
-            loading ? <Button className="w-full p-2 rounded-md bg-black text-white mt-3" type="submit">Please Wait...</Button> : <Button className="w-full p-2 rounded-md bg-black text-white mt-3" type="submit">Login</Button>
+            loading ? <Button className="w-full p-2 rounded-md bg-black text-white mt-3" type="submit">Please Wait...</Button> : <Button className="w-full p-3 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition duration-200" type="submit">Login</Button>
           }
           
           <p className="text-sm mt-2">Dont Have an Account ? <Link to="/signup"><span className="text-blue-600">Sign up</span></Link></p>

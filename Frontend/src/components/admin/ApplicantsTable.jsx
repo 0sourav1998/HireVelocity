@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -11,72 +11,118 @@ import {
 import { Popover, PopoverTrigger } from "../ui/popover";
 import { MoreHorizontal } from "lucide-react";
 import { PopoverContent } from "@radix-ui/react-popover";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { jobResponse } from "@/services/operations/applicationOperation";
 import { toast } from "sonner";
+import { Badge } from "../ui/badge";
+import { setStatus } from "../redux/Slice/applicationSlice";
 
 const ApplicantsTable = () => {
+  const dispatch = useDispatch()
   const sortlistingActions = ["Accept", "Reject"];
-  const {token} = useSelector((state)=>state.user) ;
-  const handleJobStatus = async(status,id)=>{
+  const { token } = useSelector((state) => state.user);
+
+  const handleJobStatus = async (status, id) => {
     try {
-      await jobResponse({status: status , id : id},token) ;
-      toast.success("Status Updated")
+      const response = await jobResponse({ status: status, id: id }, token);
+      sessionStorage.setItem("status",JSON.stringify(response))
+        dispatch(setStatus(response))
+        toast.success("Status Updated");
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
+      toast.error("Failed to update status");
     }
-  }
+  };
+
+
   const { applicants } = useSelector((state) => state.applications);
+
   return (
-    <div className="max-w-7xl mx-auto mt-8">
-      <Table>
-        <TableCaption>A List Of Applicants Applied For the Job</TableCaption>
-        <TableHeader>
+    <div className="max-w-7xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
+      <Table className="w-full text-sm">
+        <TableCaption className="text-lg font-semibold mb-4">
+          List of Applicants
+        </TableCaption>
+        <TableHeader className="bg-gray-200 text-gray-700 p-2">
           <TableRow>
-            <TableHead>FullName</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Contact</TableHead>
-            <TableHead>Resume</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="p-3">Full Name</TableHead>
+            <TableHead className="p-3">Email</TableHead>
+            <TableHead className="p-3">Contact</TableHead>
+            <TableHead className="p-3">Resume</TableHead>
+            <TableHead className="p-3">Date</TableHead>
+            <TableHead className="p-3">Current Status</TableHead>
+            <TableHead className="p-3">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {applicants?.map((applicant, index) => (
-            <tr key={index}>
-              <TableCell>{applicant?.applicant?.fullName}</TableCell>
-              <TableCell>{applicant?.applicant?.email}</TableCell>
-              <TableCell>{applicant?.applicant?.phoneNumber}</TableCell>
-              <TableCell>{applicant?.applicant?.profile?.resume ? <a>{applicant?.applicant?.profile?.resume}</a> : "NA"}</TableCell>
-              <TableCell>{applicant?.applicant?.createdAt.split("T")[0]}</TableCell>
-              <TableCell>
-                <Popover>
-                  <PopoverTrigger>
-                    <MoreHorizontal />
-                  </PopoverTrigger>
-                  <PopoverContent className="bg-white px-8 py-2 transition-all duration-200 rounded-md shadow-md">
-                    {sortlistingActions?.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex flex-col w-fit items-center"
-                      >
-                        <span
-                          className={`${
-                            item === "Accept"
-                              ? "text-green-500"
-                              : "text-red-500"
-                          } cursor-pointer mb-2`}
-                          onClick={()=>handleJobStatus(item,applicant._id)}
-                        >
-                          {item}
-                        </span>
-                      </div>
-                    ))}
-                  </PopoverContent>
-                </Popover>
+          {applicants?.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan="7" className="text-center py-4 text-gray-500">
+                No applicants found
               </TableCell>
-            </tr>
-          ))}
+            </TableRow>
+          ) : (
+            applicants?.map((applicant, index) => (
+              <TableRow
+                key={index}
+                className="border-b border-gray-200 hover:bg-gray-50 gap-x-4"
+              >
+                <TableCell>{applicant?.applicant?.fullName}</TableCell>
+                <TableCell>{applicant?.applicant?.email}</TableCell>
+                <TableCell>{applicant?.applicant?.phoneNumber}</TableCell>
+                <TableCell>
+                  {applicant?.applicant?.profile?.resume ? (
+                    <a
+                      href={applicant?.applicant?.profile?.resume}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-500 hover:underline"
+                    >
+                      View Resume
+                    </a>
+                  ) : (
+                    "NA"
+                  )}
+                </TableCell>
+                <TableCell>
+                  {new Date(applicant?.applicant?.createdAt).toLocaleDateString()}
+                </TableCell>
+                <TableCell  className={`flex justify-center items-center rounded-lg text-sm font-medium ${
+                    applicant?.status === "Reject" ? "bg-red-600 text-white" :
+                    applicant?.status === "Accept" ? "bg-blue-600 text-white" :
+                    "bg-gray-600 text-white"
+                  }`}>
+                  <Badge>{applicant?.status}</Badge>
+                </TableCell>
+                <TableCell className="p-3 text-right">
+                  <Popover>
+                    <PopoverTrigger className="cursor-pointer text-gray-500 hover:text-gray-700">
+                      <MoreHorizontal />
+                    </PopoverTrigger>
+                    <PopoverContent className="bg-white p-2 rounded-md shadow-lg border border-gray-300">
+                      {sortlistingActions?.map((item, index) => (
+                        <div
+                          key={index}
+                          className={`flex items-center p-2 rounded-md cursor-pointer ${
+                            item === "Accept" ? "hover:bg-green-100" : "hover:bg-red-100"
+                          }`}
+                          onClick={() => handleJobStatus(item, applicant._id)}
+                        >
+                          <span
+                            className={`${
+                              item === "Accept" ? "text-green-600" : "text-red-600"
+                            } font-semibold`}
+                          >
+                            {item}
+                          </span>
+                        </div>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </div>

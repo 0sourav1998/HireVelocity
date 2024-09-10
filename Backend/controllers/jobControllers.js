@@ -1,4 +1,7 @@
 const Job = require("../models/JobModel");
+const Application = require("../models/ApplicationModel");
+const { default: mongoose } = require("mongoose");
+const User = require("../models/UserModel")
 
 exports.createJob = async (req, res) => {
   try {
@@ -39,7 +42,7 @@ exports.createJob = async (req, res) => {
       experiance,
       jobType,
       position,
-      company : companyId,
+      company: companyId,
       requirements: requirements.split(","),
       createdBy: userId,
     });
@@ -58,7 +61,7 @@ exports.createJob = async (req, res) => {
 
 exports.findAllJob = async (req, res) => {
   try {
-    const job = await Job.find({}).populate("company").sort({createdAt:-1});
+    const job = await Job.find({}).populate("company").sort({ createdAt: -1 });
     if (!job) {
       return res.status(404).json({
         success: false,
@@ -66,7 +69,7 @@ exports.findAllJob = async (req, res) => {
       });
     }
     return res.status(200).json({
-      success : true,
+      success: true,
       job,
     });
   } catch (error) {
@@ -97,9 +100,9 @@ exports.findAllJobByKeyword = async (req, res) => {
         },
       ],
     };
-    const job = await Job.find(query).populate("company").sort({ createdAt: -1 });
-
-    console.log(job)
+    const job = await Job.find(query)
+      .populate("company")
+      .sort({ createdAt: -1 });
 
     if (job.length === 0) {
       return res.status(404).json({
@@ -107,7 +110,7 @@ exports.findAllJobByKeyword = async (req, res) => {
         message: "No results found",
       });
     }
-    
+
     return res.status(200).json({
       success: true,
       job,
@@ -120,14 +123,12 @@ exports.findAllJobByKeyword = async (req, res) => {
   }
 };
 
-
 exports.findJobById = async (req, res) => {
   try {
-    console.log("Inside............",req.body)
-    const jobId = req.params.id;
-    console.log(jobId)
-    const job = await Job.findById(jobId).populate({path:"applications",populate : {path : "applicant"}}).exec();
-    console.log("job",job)
+    const { jobId } = req.body;
+    const job = await Job.findById(jobId)
+      .populate({ path: "applications", populate: { path: "applicant" } })
+      .exec();
     if (!job) {
       return res.status(404).json({
         success: false,
@@ -167,5 +168,80 @@ exports.findAdminJobs = async (req, res) => {
       success: false,
       message: "Something Went Wrong while Finding the job",
     });
+  }
+};
+
+exports.updateJobDetails = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      salary,
+      location,
+      experiance,
+      jobType,
+      position,
+      requirements,
+      jobId,
+    } = req.body;
+    const job = await Job.findById(jobId);
+    if (!job) {
+      return res.status(400).json({
+        success: false,
+        message: "Job Does Not Exist",
+      });
+    }
+    if (title) {
+      job.title = title;
+    }
+    if (description) {
+      job.description = description;
+    }
+    if (location) {
+      job.location = location;
+    }
+    if (salary) {
+      job.salary = salary;
+    }
+    if (experiance) {
+      job.experiance = experiance;
+    }
+    if (jobType) {
+      job.jobType = jobType;
+    }
+    if (position) {
+      job.position = position;
+    }
+    if (requirements) {
+      job.requirements = requirements;
+    }
+    await job.save();
+    return res.status(200).json({
+      success: true,
+      message: "Job Updated Successfully",
+      job,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      success: false,
+      message: "Failed to update the job",
+    });
+  }
+};
+
+exports.deleteJobById = async (req, res) => {
+  try {
+    const { jobId } = req.body;
+    await Job.findByIdAndDelete(jobId);
+    const appli = await Application.findOne({job:jobId})
+    await Application.deleteMany({ job: jobId });
+    await User.findByIdAndUpdate(appli.applicant,{$pull : {jobsApplied : jobId}})
+    return res.status(200).json({
+      success: true,
+      message: "Job Deleted Successfully",
+    });
+  } catch (error) {
+    console.log(error);
   }
 };

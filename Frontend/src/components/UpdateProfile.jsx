@@ -42,7 +42,6 @@ const UpdateProfile = ({ open, setOpen }) => {
     formData.append("file",input?.file)
     try {
       const result = await updateProfileOp(formData,token);
-      console.log(result)
       dispatch(setUser(result))
       setOpen(false)
     } catch (error) {

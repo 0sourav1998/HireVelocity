@@ -15,6 +15,9 @@ import Applicants from "./components/admin/Applicants";
 import { ProtectedRoute } from "./components/admin/ProtectedRoute";
 import { ProtectedRouteForStudents } from "./components/ProtectedRouteForStudents";
 import PageNotFound from "./components/PageNotFound";
+import Bookmark from "./components/Bookmark";
+import EditCompany from "./components/admin/EditCompany";
+import EditJob from "./components/admin/EditJob";
 
 function App() {
   return (
@@ -23,18 +26,104 @@ function App() {
         <Route element={<Home />} path="/" />
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
-        <Route element={<ProtectedRouteForStudents><Job/></ProtectedRouteForStudents>} path="/jobs" />
-        <Route element={<ProtectedRouteForStudents><JobDescription/></ProtectedRouteForStudents>} path="/jobs/description/:id" />
-        <Route element={<ProtectedRouteForStudents><Browse/></ProtectedRouteForStudents>} path="/browse" />
-        <Route element={<ProtectedRouteForStudents><Profile/></ProtectedRouteForStudents>} path="/link" />
-
-        <Route element={<ProtectedRoute><Companies/></ProtectedRoute>} path="/admin/companies"/>
-        <Route element={<ProtectedRoute><CreateCompany/></ProtectedRoute>} path="/admin/comapanies/createCompany"/>
-        <Route element={<ProtectedRoute><SetCompanyInfo/></ProtectedRoute>} path="/companies/setInfo/:id"/>
-        <Route element={<ProtectedRoute><AdminJobs/></ProtectedRoute>} path="/admin/jobs"/>
-        <Route element={<ProtectedRoute><CreateJob/></ProtectedRoute>} path="/admin/jobs/createJob"/>
-        <Route element={<ProtectedRoute><Applicants/></ProtectedRoute>} path="/jobs/:id/applicants" />
-        <Route element={<PageNotFound/>} path="*" />
+        <Route
+          element={
+            <ProtectedRouteForStudents>
+              <Job />
+            </ProtectedRouteForStudents>
+          }
+          path="/jobs"
+        />
+        <Route
+          element={
+            <ProtectedRouteForStudents>
+              <JobDescription />
+            </ProtectedRouteForStudents>
+          }
+          path="/jobs/description/:id"
+        />
+        <Route
+          element={
+            <ProtectedRouteForStudents>
+              <Browse />
+            </ProtectedRouteForStudents>
+          }
+          path="/browse"
+        />
+        <Route
+          element={
+            <ProtectedRouteForStudents>
+              <Profile />
+            </ProtectedRouteForStudents>
+          }
+          path="/link"
+        />
+        <Route
+          element={
+            <ProtectedRouteForStudents>
+              <Bookmark />
+            </ProtectedRouteForStudents>
+          }
+          path="/bookmark"
+        />
+        <Route
+          element={
+            <ProtectedRoute>
+              <Companies />
+            </ProtectedRoute>
+          }
+          path="/admin/companies"
+        />
+        <Route
+          element={
+            <ProtectedRoute>
+              <CreateCompany />
+            </ProtectedRoute>
+          }
+          path="/admin/comapanies/createCompany"
+        />
+        <Route
+          element={
+            <ProtectedRoute>
+              <SetCompanyInfo />
+            </ProtectedRoute>
+          }
+          path="/companies/setInfo/:id"
+        />
+        <Route element={<ProtectedRoute><EditJob/></ProtectedRoute>} path="/companies/job/setInfo/:id"/>
+        <Route
+          element={
+            <ProtectedRoute>
+              <EditCompany />
+            </ProtectedRoute>
+          }
+          path="/companies/edit/:id"
+        />
+        <Route
+          element={
+            <ProtectedRoute>
+              <AdminJobs />
+            </ProtectedRoute>
+          }
+          path="/admin/jobs"
+        />
+        <Route
+          element={
+            <ProtectedRoute>
+              <CreateJob />
+            </ProtectedRoute>
+          }
+          path="/admin/jobs/createJob"
+        />
+        <Route
+          element={
+            <ProtectedRoute>
+              <Applicants />
+            </ProtectedRoute>
+          }
+          path="/jobs/:id/applicants"
+        />
+        <Route element={<PageNotFound />} path="*" />
       </Routes>
     </div>
   );
