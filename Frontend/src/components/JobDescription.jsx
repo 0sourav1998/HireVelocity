@@ -44,7 +44,6 @@ const JobDescription = () => {
         Authorization: `Bearer ${token}`
       }
     });
-    console.log(result)
     if (result) {
       sessionStorage.setItem("job", JSON.stringify(result?.data?.job));
       dispatch(setSingleJob(result?.data?.job));

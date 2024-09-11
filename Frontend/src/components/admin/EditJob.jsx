@@ -8,6 +8,7 @@ import {
   updateJob,
 } from "@/services/operations/JobOperations";
 import { toast } from "sonner";
+import Footer from "../shared/Footer";
 
 const EditJob = () => {
   const { id } = useParams();
@@ -41,7 +42,7 @@ const EditJob = () => {
   const handleDeleteJob = async () => {
     try {
       await deleteJob({ jobId: id }, token);
-      toast.success("Job Deleted Successfully")
+      toast.success("Job Deleted Successfully");
       navigate("/admin/jobs");
     } catch (error) {
       console.log(error);
@@ -96,155 +97,163 @@ const EditJob = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar />
-      <div className="flex flex-col gap-y-6 max-w-4xl mx-auto mt-10 bg-white shadow-xl rounded-lg p-8">
-        <h1 className="text-4xl font-bold text-gray-800">Edit Job Details</h1>
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-between sm:gap-y-6 gap-y-4">
+      <div>
+        <Navbar />
+        <div className="flex flex-col sm:gap-y-6 gap-y-3 max-w-4xl mx-auto sm:mt-10 mt-5 bg-white shadow-xl rounded-lg sm:p-8 p-3">
+          <h1 className="sm:text-4xl text-2xl font-bold text-gray-800">
+            Edit Job Details
+          </h1>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="text-lg font-medium text-gray-700">
-            Title
-          </label>
-          <input
-            id="title"
-            name="title"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-            value={input.title}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="description"
-            className="text-lg font-medium text-gray-700"
-          >
-            Description
-          </label>
-          <input
-            id="description"
-            name="description"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-            value={input.description}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="location"
-            className="text-lg font-medium text-gray-700"
-          >
-            Location
-          </label>
-          <input
-            id="location"
-            name="location"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-            value={input.location}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="flex items-center justify-between">
           <div className="flex flex-col gap-2">
             <label
-              htmlFor="experiance"
-              className="text-lg font-medium text-gray-700"
+              htmlFor="name"
+              className="text-sm sm:text-lg font-medium text-gray-700"
             >
-              Experiance
+              Title
             </label>
             <input
-              id="experiance"
-              type="number"
-              name="experiance"
-              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-              value={input.experiance}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label
-              htmlFor="position"
-              className="text-lg font-medium text-gray-700"
-            >
-              Position
-            </label>
-            <input
-              id="position"
-              name="position"
-              type="number"
-              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-              value={input.position}
+              id="title"
+              name="title"
+              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:sm:p-3  p-1.5"
+              value={input.title}
               onChange={handleChange}
             />
           </div>
 
           <div className="flex flex-col gap-2">
             <label
-              htmlFor="salary"
-              className="text-lg font-medium text-gray-700"
+              htmlFor="description"
+              className="text-sm sm:text-lg font-medium text-gray-700"
             >
-              Salary
+              Description
             </label>
             <input
-              id="salary"
-              type="number"
-              name="salary"
-              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-              value={input.salary}
+              id="description"
+              name="description"
+              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
+              value={input.description}
               onChange={handleChange}
             />
           </div>
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="requirements"
-            className="text-lg font-medium text-gray-700"
-          >
-            Requirements
-          </label>
-          <input
-            id="requirements"
-            name="requirements"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-            value={input.requirements}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="location"
+              className="text-sm sm:text-lg font-medium text-gray-700"
+            >
+              Location
+            </label>
+            <input
+              id="location"
+              name="location"
+              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
+              value={input.location}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="jobType"
-            className="text-lg font-medium text-gray-700"
-          >
-            Job Type
-          </label>
-          <input
-            id="jobType"
-            name="jobType"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
-            value={input.jobType}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="flex sm:flex-row flex-col sm:items-center justify-between">
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="experiance"
+                className="text-sm sm:text-lg font-medium text-gray-700"
+              >
+                Experiance
+              </label>
+              <input
+                id="experiance"
+                type="number"
+                name="experiance"
+                className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
+                value={input.experiance}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="position"
+                className="text-sm sm:text-lg font-medium text-gray-700"
+              >
+                Position
+              </label>
+              <input
+                id="position"
+                name="position"
+                type="number"
+                className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
+                value={input.position}
+                onChange={handleChange}
+              />
+            </div>
 
-        <div className="flex gap-4 mt-6">
-          <button
-            onClick={handleSubmit}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
-          >
-            {loading ? "Please Wait..." : "Save Changes"}
-          </button>
-          <button
-            onClick={handleDeleteJob}
-            className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700 transition-all duration-200"
-          >
-            Delete Job
-          </button>
+            <div className="flex flex-col gap-2">
+              <label
+                htmlFor="salary"
+                className="text-sm sm:text-lg font-medium text-gray-700"
+              >
+                Salary
+              </label>
+              <input
+                id="salary"
+                type="number"
+                name="salary"
+                className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
+                value={input.salary}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="requirements"
+              className="text-sm sm:text-lg font-medium text-gray-700"
+            >
+              Requirements
+            </label>
+            <input
+              id="requirements"
+              name="requirements"
+              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
+              value={input.requirements}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="jobType"
+              className="text-sm sm:text-lg font-medium text-gray-700"
+            >
+              Job Type
+            </label>
+            <input
+              id="jobType"
+              name="jobType"
+              className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
+              value={input.jobType}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex sm:flex-row flex-col gap-4 sm:mt-6 mt-3">
+            <button
+              onClick={handleSubmit}
+              className="bg-blue-600 sm:text-lg text-sm text-white sm:px-6 sm:py-3 px-3 py-1.5 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
+            >
+              {loading ? "Please Wait..." : "Save Changes"}
+            </button>
+            <button
+              onClick={handleDeleteJob}
+              className="bg-red-600 sm:text-lg text-sm text-white sm:px-6 sm:py-3 px-3 py-1.5  rounded-lg shadow-md hover:bg-red-700 transition-all duration-200"
+            >
+              Delete Job
+            </button>
+          </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

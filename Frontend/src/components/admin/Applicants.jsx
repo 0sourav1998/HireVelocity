@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { getApplcants } from '@/services/operations/applicationOperation';
 import { useDispatch, useSelector } from 'react-redux';
 import { setApplicants } from '../redux/Slice/applicationSlice';
+import Footer from '../shared/Footer';
 
 const Applicants = () => {
   const { id } = useParams();
@@ -24,14 +25,15 @@ const Applicants = () => {
   }, [id, token, dispatch,status]);
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col">
+    <div className="bg-gray-100 min-h-screen flex flex-col overflow-y-hidden">
       <Navbar />
-      <main className="flex-grow p-6 mx-auto max-w-7xl">
-        <div className="bg-white shadow-lg rounded-lg p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Applicants</h1>
+      <main className="flex-grow sm:p-6 p-1 sm:m-12 mx-auto sm:max-w-7xl">
+        <div className="bg-white shadow-lg rounded-lg sm:p-6 p-2 sm:max-w-7xl max-w-[290px]">
+          <h1 className="sm:text-2xl text-lg font-bold text-gray-800 sm:mb-4 mb-0 text-center">Applicants</h1>
           <ApplicantsTable />
         </div>
       </main>
+      <Footer/>
     </div>
   );
 };

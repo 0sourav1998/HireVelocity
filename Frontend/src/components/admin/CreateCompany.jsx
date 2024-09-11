@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createCompany } from "@/services/operations/companyOperatons";
 import { toast } from "sonner";
 import { setCompany } from "../redux/Slice/companySlice";
+import Footer from "../shared/Footer";
 
 const CreateCompany = () => {
   const [companyName, setCompanyName] = useState("");
@@ -33,17 +34,17 @@ const CreateCompany = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-between">
       <Navbar />
-      <div className="max-w-4xl mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg">
+      <div className="max-w-4xl mx-auto sm:mt-8 sm:p-6 mt-4 p-3 bg-white shadow-lg rounded-lg">
         <div className="flex flex-col gap-y-4 mb-6">
-          <h1 className="font-bold text-3xl text-gray-800">Create Your Company</h1>
+          <h1 className="font-bold sm:text-3xl text-xl text-gray-800">Create Your Company</h1>
           <p className="text-gray-600">
             What would you like to name your company? You can change this later.
           </p>
         </div>
         <div className="flex flex-col mb-8">
-          <Label className="text-lg font-medium text-gray-700">Company Name</Label>
+          <Label className="sm:text-lg text-sm font-medium text-gray-700">Company Name</Label>
           <Input
             placeholder="Enter your company name"
             name="companyName"
@@ -68,6 +69,7 @@ const CreateCompany = () => {
           </Button>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

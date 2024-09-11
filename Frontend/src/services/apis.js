@@ -5,7 +5,8 @@ export const userEndPoints = {
   SIGNUP: `${BASE_URL}/api/v1/user/register`,
   LOGIN: `${BASE_URL}/api/v1/user/login`,
   UPDATE_PROFILE : `${BASE_URL}/api/v1/user/updateProfile`,
-  LOGOUT : `${BASE_URL}/api/v1/user/logout`
+  LOGOUT : `${BASE_URL}/api/v1/user/logout` ,
+  ADD_BOOKMARK : `${BASE_URL}/api/v1/user/addBookmark`
 };
 
 
@@ -16,7 +17,8 @@ export const jobEndPoints = {
   GET_ADMIN_JOBS : `${BASE_URL}/api/v1/job/findAdminJobs` ,
   CREATE_JOB : `${BASE_URL}/api/v1/job/createJob`,
   UPDATE_JOB : `${BASE_URL}/api/v1/job/updateJobDetails` ,
-  DELETE_JOB : `${BASE_URL}/api/v1/job/deleteJobById`
+  DELETE_JOB : `${BASE_URL}/api/v1/job/deleteJobById` ,
+  FETCH_BOOKMARKED : `${BASE_URL}/api/v1/job/fetchBookmarkedJobs`
 }
 
 

@@ -1,15 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import {
-  Bookmark,
-  BookmarkCheck,
-  BookmarkXIcon,
-  LogOut,
-  LucideBookmark,
-  User2,
-} from "lucide-react";
+import { Bookmark, LogOut, User2 } from "lucide-react";
 import { Button } from "../ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../redux/Slice/authslice";
@@ -19,11 +12,13 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const { bookmarkedJobs } = useSelector((state) => state.job);
 
   const handleLogout = async () => {
     try {
       dispatch(setUser(null));
       dispatch(setToken(null));
+      sessionStorage.clear();
       navigate("/");
       toast.success("Logged Out");
     } catch (error) {
@@ -47,29 +42,32 @@ const Navbar = () => {
           <ul className="flex justify-between sm:gap-5 gap-4">
             {user?.role === "recruiter" ? (
               <>
-                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                <li className="sm:font-semibold font-normal hover:opacity-70 hover:border-b transition-all duration-200">
                   <Link to="/admin/companies">Companies</Link>
                 </li>
-                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                <li className="sm:font-semibold font-normal hover:opacity-70 hover:border-b transition-all duration-200">
                   <Link to="/admin/jobs">Jobs</Link>
                 </li>
               </>
             ) : (
               <div className="flex gap-4 mr-2">
-                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                <li className="sm:font-semibold font-normal hover:opacity-70 hover:border-b transition-all duration-200">
                   <Link to="/">Home</Link>
                 </li>
-                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                <li className="sm:font-semibold font-normal hover:opacity-70 hover:border-b transition-all duration-200">
                   <Link to="/jobs">Jobs</Link>
                 </li>
-                <li className="sm:font-semibold font-normal hover:opacity-70 transition-all duration-200">
+                <li className="sm:font-semibold font-normal hover:opacity-70 hover:border-b transition-all duration-200">
                   <Link to="/browse">Browse</Link>
                 </li>
                 {user?.role === "student" && (
-                  <li className="cursor-pointer">
+                  <li className="cursor-pointer relative hover:border-b">
                     <Link to="/bookmark">
                       <Bookmark />
                     </Link>
+                    <span className="absolute -top-4 -right-2 font-bold text-green-700 sm:text-lg rounded-full">
+                      {bookmarkedJobs?.length}
+                    </span>
                   </li>
                 )}
               </div>
@@ -89,7 +87,7 @@ const Navbar = () => {
                     />
                   </Avatar>
                 </PopoverTrigger>
-                <PopoverContent className="sm:w-80 w-50 sm:p-4 p-2 border rounded-lg shadow-lg bg-slate-600 text-white">
+                <PopoverContent className="sm:w-80 w-fit sm:p-4 p-4 border rounded-lg shadow-lg bg-slate-600 text-white">
                   <div className="flex gap-4 items-center">
                     <Avatar className="cursor-pointer">
                       <AvatarImage
@@ -101,12 +99,12 @@ const Navbar = () => {
                       />
                     </Avatar>
                     <div>
-                      <h4 className="font-semibold sm:text-lg text-sm">
+                      <h4 className="font-semibold sm:text-lg text-xs">
                         {user?.fullName}
                       </h4>
-                      <p className="text-sm text-gray-300">
-                        {user?.profile?.bio}
-                      </p>
+                      <div className="flex flex-wrap sm:text-sm text-[10px] text-gray-300">
+                        <p className="text-wrap">{user?.profile?.bio}</p>
+                      </div>
                     </div>
                   </div>
                   <div className="flex flex-col sm:mt-4 mt-2">
@@ -118,9 +116,13 @@ const Navbar = () => {
                         </Link>
                       </div>
                     )}
-                    <div className="flex flex-row sm:gap-4 gap-2 items-center sm:mt-2 mt-1">
+                    <div className="flex flex-row sm:gap-4 gap-2 items-center sm:mt-2 mt-0">
                       <LogOut />
-                      <Button onClick={handleLogout} variant="link">
+                      <Button
+                        className="sm:text-lg text-sm"
+                        onClick={handleLogout}
+                        variant="link"
+                      >
                         Logout
                       </Button>
                     </div>
@@ -130,13 +132,13 @@ const Navbar = () => {
             ) : (
               <div className="flex sm:flex-row flex-col items-center gap-3">
                 <button
-                  className="bg-green-300 sm:text-lg text-sm rounded-md sm:px-2.5 px-2 sm:py-2 py-1 hover:bg-green-400 transition-all duration-200 hover:scale-105"
+                  className="bg-green-600 text-white sm:text-lg text-sm rounded-md sm:px-6 px-4 sm:py-2 py-1 hover:bg-green-500 transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
                   onClick={() => navigate("/login")}
                 >
                   Login
                 </button>
                 <button
-                  className="text-white sm:text-lg text-sm rounded-md sm:px-2.5 px-1 sm:py-2 py-1 bg-[#6A38C2] hover:bg-[#4d1f9c] transition-all duration-200 hover:scale-95"
+                  className="text-white sm:text-lg text-sm rounded-md sm:px-6 px-4 sm:py-2 py-1 bg-[#6A38C2] hover:bg-[#4d1f9c] transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
                   onClick={() => navigate("/signup")}
                 >
                   Signup

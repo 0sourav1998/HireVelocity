@@ -38,9 +38,9 @@ const AdminJobTable = () => {
     }, []);
 
     return (
-        <div className="max-w-6xl mx-auto mt-6 p-6 bg-white shadow-md rounded-lg border border-gray-200">
+        <div className="max-w-6xl mx-auto sm:mt-6 sm:p-6 mt-3 p-3 bg-white shadow-md rounded-lg border border-gray-200">
             <Table className="w-full">
-                <TableCaption className="text-lg font-semibold mb-4">A List Of Recent Registered Jobs</TableCaption>
+                <TableCaption className="sm:text-lg text-sm font-semibold sm:mb-4 mb-2">A List Of Recent Registered Jobs</TableCaption>
                 <TableHeader className="bg-gray-50">
                     <TableRow>
                         <TableHead className="p-4 text-left font-medium text-gray-700">Company Name</TableHead>
@@ -52,7 +52,7 @@ const AdminJobTable = () => {
                 <TableBody>
                     {adminJobs?.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan="4" className="text-center p-4 text-gray-500">No jobs available</TableCell>
+                            <TableCell colSpan="4" className="text-center sm:p-4 p-2 text-gray-500">No jobs available</TableCell>
                         </TableRow>
                     ) : (
                         filteredResult?.map((job) => (

@@ -9,6 +9,7 @@ const initialState = {
     searchText : "" ,
     searchedJob : sessionStorage.getItem("searchedJob") ? JSON.parse(sessionStorage.getItem("searchedJob")) : [] ,
     filterGroup : "",
+    bookmarkedJobs : sessionStorage.getItem("bookmarks") ? JSON.parse(sessionStorage.getItem("bookmarks")) : []
 }
 
 const jobSlice = createSlice({
@@ -38,9 +39,12 @@ const jobSlice = createSlice({
         } ,
         setFilterGroup : (state,action)=>{
             state.filterGroup = action.payload
+        } ,
+        setBookmarkedJobs : (state,action)=>{
+            state.bookmarkedJobs = action.payload 
         }
     }
 })
 
-export const {setAllJobs , setSingleJob , setAdminJobs,setSearchJob , setStudentAppliedJobs,setSearchText ,setSearchedJob ,setFilterGroup} = jobSlice.actions ;
+export const {setAllJobs , setSingleJob , setAdminJobs,setSearchJob ,setBookmarkedJobs, setStudentAppliedJobs,setSearchText ,setSearchedJob ,setFilterGroup} = jobSlice.actions ;
 export default jobSlice.reducer;

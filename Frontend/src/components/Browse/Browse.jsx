@@ -18,18 +18,21 @@ const Browse = () => {
     };
   }, [dispatch]);
   return (
-    <div>
-      <Navbar />
-      <div className="ml-2 max-w-7xl mx-auto mt-6">
-        <h1 className="text-2xl font-bold">
-          Search Results ({searchedJob?.length || 0})
-        </h1>
-        <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 mt-5 mb-5">
-          {searchedJob?.map((job, index) => (
-            <Job key={index} job={job} />
-          ))}
+    <div className="flex flex-col justify-between min-h-screen">
+      <div>
+        <Navbar />
+        <div className="ml-2 max-w-7xl mx-auto mt-6">
+          <h1 className="text-2xl font-bold">
+            Search Results ({searchedJob?.length || 0})
+          </h1>
+          <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 mt-5 mb-5">
+            {searchedJob?.map((job, index) => (
+              <Job key={index} job={job} />
+            ))}
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

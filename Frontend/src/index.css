@@ -3,3 +3,7 @@
 @tailwind utilities;
 
 @import "@shadcn/ui/dist/style.css";
+
+body{
+    height: 100vh;
+}

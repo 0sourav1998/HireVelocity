@@ -11,7 +11,6 @@ export const applyJobs = async(body,token)=>{
         const response = await apiConnector("POST",APPLY_JOB,body,{
                 Authorization : `Bearer ${token}`  
         });
-        console.log("Response",response)
         if(response?.data?.success){
             toast.success("Applied");
             result = response?.data?.updateUser
@@ -43,8 +42,7 @@ export const jobResponse = async(body,token)=>{
     try {
         const response = await apiConnector("PUT",UPDATE_STATUS,body , {
             Authorization : `Bearer ${token}`
-        })
-        console.log(response)
+        });
         if(response?.data?.success){
             result = response?.data?.application?.status
         }

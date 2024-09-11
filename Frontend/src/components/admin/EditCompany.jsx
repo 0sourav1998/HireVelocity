@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../shared/Navbar";
 import axios from "axios";
+import Footer from "../shared/Footer";
 
 const EditCompany = () => {
   const { id } = useParams();
@@ -90,92 +91,93 @@ const EditCompany = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
-      <div className="flex flex-col gap-y-6 max-w-4xl mx-auto mt-10 bg-white shadow-xl rounded-lg p-8">
-        <h1 className="text-4xl font-bold text-gray-800">
+      <div className="flex flex-col sm:gap-y-6 gap-y-3 max-w-4xl mx-auto sm:mt-10 mt-5 bg-white shadow-xl rounded-lg p-8 sm:mb-6 mb-4">
+        <h1 className="sm:text-4xl sm:font-bold text-1.5xl font-semibold text-gray-800">
           Edit Company Details
         </h1>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="name" className="text-lg font-medium text-gray-700">
+        <div className="flex flex-col sm:gap-2 gap-1">
+          <label htmlFor="name" className="sm:text-lg text-sm font-medium text-gray-700">
             Company Name
           </label>
           <input
             id="name"
             name="companyName"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
+            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
             value={input.companyName}
             onChange={handleChange}
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label htmlFor="description" className="text-lg font-medium text-gray-700">
+        <div className="flex flex-col sm:gap-2 gap-1">
+          <label htmlFor="description" className="sm:text-lg text-sm font-medium text-gray-700">
             Company Description
           </label>
           <input
             id="name"
             name="description"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
+            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
             value={input.description}
             onChange={handleChange}
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:gap-2 gap-1">
           <label
             htmlFor="location"
-            className="text-lg font-medium text-gray-700"
+            className="sm:text-lg text-sm font-medium text-gray-700"
           >
             Location
           </label>
           <input
             id="location"
             name="location"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
+            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
             value={input.location}
             onChange={handleChange}
           />
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col sm:gap-2 gap-1">
           <label
             htmlFor="website"
-            className="text-lg font-medium text-gray-700"
+            className="sm:text-lg text-sm font-medium text-gray-700"
           >
             Website
           </label>
           <input
             id="website"
             name="website"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg p-3"
+            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none rounded-lg sm:p-3 p-1.5"
             value={input.website}
             onChange={handleChange}
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="text-lg font-medium text-gray-700">
+        <div className="flex flex-col sm:gap-2 gap-1">
+          <label className="sm:text-lg text-sm font-medium text-gray-700">
             Company Logo
           </label>
           <input
             type="file"
-            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 rounded-lg p-3"
+            className="w-full border border-gray-300 focus:ring-2 focus:ring-blue-500 rounded-lg sm:p-3 p-1.5"
             onChange={handleFileChange}
           />
         </div>
 
-        <div className="flex gap-4 mt-6">
+        <div className="flex sm:flex-row flex-col sm:gap-4 sm:mt-6 gap-2 mt-2">
           <button
             onClick={handleSubmit}
-            className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
+            className="bg-blue-600 sm:text-lg text-sm text-white sm:px-6 sm:py-3 px-3 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
           >
             {loading ? "Please Wait..." : "Save Changes"}
           </button>
-          <button onClick={handleDeleteCompany} className="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700 transition-all duration-200">
+          <button onClick={handleDeleteCompany} className="bg-red-600 sm:text-lg text-sm text-white sm:px-6 sm:py-3 px-3 py-3 rounded-lg shadow-md hover:bg-red-700 transition-all duration-200">
             Delete Company
           </button>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

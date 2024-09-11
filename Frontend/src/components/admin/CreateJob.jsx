@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createJob } from "@/services/operations/JobOperations";
 import { toast } from "sonner";
+import Footer from "../shared/Footer";
 
 
 const CreateJob = () => {
@@ -59,14 +60,16 @@ const CreateJob = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-100 flex flex-col justify-between sm:gap-y-6 gap-y-4">
+      <div>
       <Navbar />
-      <div className="container max-w-2xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+      <div className="container max-w-2xl mx-auto sm:p-8 p-4 bg-white rounded-lg shadow-lg">
+        <h1 className="sm:text-4xl text-2xl sm:font-bold font-semi mb-2 text-center">Create A Job</h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="sm:mb-4 mb-2">
             <Label
               htmlFor="title"
-              className="block mb-2 text-sm font-medium text-gray-700"
+              className="block sm:mb-2 mb-1 text-sm font-medium text-gray-700"
             >
               Title
             </Label>
@@ -76,11 +79,11 @@ const CreateJob = () => {
               required
               name="title"
               value={input.title}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleChangeFuncton}
             />
           </div>
-          <div className="mb-4">
+          <div className="sm:mb-4 mb-2">
             <Label
               htmlFor="description"
               className="block mb-2 text-sm font-medium text-gray-700"
@@ -93,11 +96,11 @@ const CreateJob = () => {
               value={input.description}
               name="description"
               required
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleChangeFuncton}
             />
           </div>
-          <div className="mb-4">
+          <div className="sm:mb-4 mb-2">
             <Label
               htmlFor="location"
               className="block mb-2 text-sm font-medium text-gray-700"
@@ -110,11 +113,11 @@ const CreateJob = () => {
               value={input.location}
               required
               name="location"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleChangeFuncton}
             />
           </div>
-          <div className="mb-4">
+          <div className="sm:mb-4 mb-2">
             <Label
               htmlFor="experiance"
               className="block mb-2 text-sm font-medium text-gray-700"
@@ -128,11 +131,11 @@ const CreateJob = () => {
               required
               type="number"
               name="experiance"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleChangeFuncton}
             />
           </div>
-          <div className="mb-4">
+          <div className="sm:mb-4 mb-2">
             <Label
               htmlFor="requirements"
               className="block mb-2 text-sm font-medium text-gray-700"
@@ -145,11 +148,11 @@ const CreateJob = () => {
               value={input.requirements}
               name="requirements"
               required
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={handleChangeFuncton}
             />
           </div>
-          <div className="flex gap-x-8 items-center">
+          <div className="flex sm:flex-row flex-col gap-x-8 sm:items-center">
             <div className="mb-4">
               <Label
                 htmlFor="position"
@@ -164,7 +167,7 @@ const CreateJob = () => {
                 value={input.position}
                 name="position"
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={handleChangeFuncton}
               />
             </div>
@@ -181,7 +184,7 @@ const CreateJob = () => {
                 value={input.jobType}
                 name="jobType"
                 required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={handleChangeFuncton}
               />
             </div>
@@ -199,7 +202,7 @@ const CreateJob = () => {
                 required
                 name="salary"
                 value={input.salary}
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 onChange={handleChangeFuncton}
               />
             </div>
@@ -210,7 +213,7 @@ const CreateJob = () => {
             </Label>
             {allCompanies?.length > 0 && (
               <Select required onValueChange={changeSelectHandler}>
-                <SelectTrigger className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <SelectTrigger className="w-full sm:p-3 p-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <SelectValue placeholder="Select a Company" />
                 </SelectTrigger>
                 <SelectContent>
@@ -233,7 +236,7 @@ const CreateJob = () => {
           <Button
             variant="outline"
             type="submit"
-            className="w-full p-3 mt-6 text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
+            className="w-full sm:p-3 p-1.5 mt-6 text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
           >
             {
                 loading ? "Loading..." : "Create"
@@ -241,6 +244,8 @@ const CreateJob = () => {
           </Button>
         </form>
       </div>
+      </div>
+      <Footer/>
     </div>
   );
 };

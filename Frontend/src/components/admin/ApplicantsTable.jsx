@@ -38,7 +38,7 @@ const ApplicantsTable = () => {
   const { applicants } = useSelector((state) => state.applications);
 
   return (
-    <div className="max-w-7xl mx-auto mt-8 p-6 bg-white rounded-lg shadow-lg">
+    <div className="sm:max-w-7xl max-w-[290px] mx-auto sm:mt-8 sm:p-6 mt-6 p-4 bg-white rounded-lg shadow-lg">
       <Table className="w-full text-sm">
         <TableCaption className="text-lg font-semibold mb-4">
           List of Applicants

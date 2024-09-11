@@ -120,13 +120,12 @@ exports.updateProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        msessage: "User Not Found",
+        message: "User Not Found",
       });
     }
     if(file){
-      const My_resume = await uploadImageToCloudinary(file,process.env.FOLDER_NAME)
-      console.log("My Resume",My_resume)
-      user.profile.resume = My_resume.secure_url
+      const My_resume = await uploadImageToCloudinary(file,process.env.FOLDER_NAME);
+      user.profile.resume = My_resume.secure_url.replace("pdf","jpg");
     }
     if (fullName) {
       user.fullName = fullName;
@@ -157,3 +156,27 @@ exports.updateProfile = async (req, res) => {
     });
   }
 };
+
+exports.addBookmark = async(req,res)=>{
+  try {
+    const {jobId} = req.body ;
+    const userId = req.userId ;
+    const user = await User.findById(userId);
+    if(user?.bookmarkedJobs?.includes(jobId)){
+      const afterRemoveBookmark = await User.findByIdAndUpdate(userId,{ $pull : {bookmarkedJobs : jobId}},{new : true}).populate("bookmarkedJobs");
+      return res.status(200).json({
+        success : true ,
+        message : "Bookmark Removed Successfully",
+        jobs : afterRemoveBookmark.bookmarkedJobs
+      })
+    }
+    const afterAddBookmark = await User.findByIdAndUpdate(userId,{$push : {bookmarkedJobs : jobId}},{new:true}).populate("bookmarkedJobs");
+    return res.status(200).json({
+      success : true ,
+      message : "Bookmark Added" ,
+      jobs : afterAddBookmark.bookmarkedJobs
+    })
+  } catch (error) {
+    console.log(error.message)
+  }
+}

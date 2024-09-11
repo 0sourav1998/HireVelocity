@@ -3,7 +3,7 @@ import { apiConnector } from "../apiConnector"
 import {jobEndPoints} from "../apis" 
 import { applicationEndPoints } from "../apis"
 
-const {GET_ALL_JOBS , GET_ADMIN_JOBS , CREATE_JOB , GET_JOB_BY_JOB_ID , UPDATE_JOB , DELETE_JOB} = jobEndPoints
+const {GET_ALL_JOBS , GET_ADMIN_JOBS , CREATE_JOB , GET_JOB_BY_JOB_ID , UPDATE_JOB , DELETE_JOB , FETCH_BOOKMARKED} = jobEndPoints
 const {GET_APPLIED_JOBS} = applicationEndPoints;
 
 
@@ -107,4 +107,19 @@ export const deleteJob = async(body,token)=>{
     } catch (error) {
         console.log(error)
     }
+}
+
+export const fetchBookmarked = async(token)=>{
+    let result ;
+    try {
+        const response = await apiConnector("GET",FETCH_BOOKMARKED,null,{
+            Authorization : `Bearer ${token}`
+        });
+        if(response.data?.success){
+            result = response?.data?.jobs
+        }
+    } catch (error) {
+        console.log(error.message)
+    }
+    return result ;
 }

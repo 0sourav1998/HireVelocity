@@ -68,7 +68,7 @@ const Profile = () => {
           <Label className="font-bold sm:text-lg text-sm text-gray-800">Resume</Label>
           {isHaveResume ? (
             <a
-              target="blank"
+              target="_blank"
               className="w-full cursor-pointer hover:underline text-blue-600 sm:text-normal text-xs"
               href={user?.profile?.resume}
             >

@@ -3,7 +3,7 @@ import { apiConnector } from "../apiConnector";
 import { userEndPoints } from "../apis";
 import { setLoading, setToken, setUser } from "@/components/redux/Slice/authslice";
 
-const { SIGNUP , LOGIN , UPDATE_PROFILE} = userEndPoints;
+const { SIGNUP , LOGIN , UPDATE_PROFILE , ADD_BOOKMARK} = userEndPoints;
 
 export const signup = async (body,navigate) => {
   let result;
@@ -13,7 +13,6 @@ export const signup = async (body,navigate) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
     if (response?.data?.success) {
       navigate("/login")
       toast.success(response?.data?.message)
@@ -30,10 +29,8 @@ export const login =(body,navigate)=>{
     dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST",LOGIN,body);
-      console.log(response)
       if(response?.data?.success){
         navigate("/");
-        // sessionStorage.setItem("userWithAppliedJob",JSON.stringify(response?.data?.))
         sessionStorage.setItem("user",JSON.stringify(response?.data?.existingUser))
         sessionStorage.setItem("token",JSON.stringify(response?.data?.token))
         dispatch(setUser(response?.data?.existingUser))
@@ -67,4 +64,20 @@ export const updateProfileOp = async(body,token) =>{
     toast.dismiss(toastId)
   }
   return result ;
+}
+
+export const addJobToBookmark = async(body,token)=>{
+  let result ;
+  try {
+    const response = await apiConnector("POST",ADD_BOOKMARK,body,{
+      Authorization : `Bearer ${token}`
+    });
+    if(response?.data?.success){
+      result = response?.data?.jobs
+      toast.success(response?.data?.message)
+    }
+  } catch (error) {
+    console.log(error.message)
+  }
+  return result;
 }

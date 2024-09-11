@@ -245,3 +245,20 @@ exports.deleteJobById = async (req, res) => {
     console.log(error);
   }
 };
+
+
+exports.fetchBookmarkedJobs = async(req,res)=>{
+  try {
+    const userId = req.userId ;
+    const user = await User.findById(userId).populate("bookmarkedJobs");
+    if(user?.role === "student"){
+      return res.status(200).json({
+        success : true ,
+        message : "Bookmarked Fetched Successfully",
+        jobs : user?.bookmarkedJobs
+      })
+    }
+  } catch (error) {
+    console.log(error.message)
+  }
+}

@@ -33,8 +33,7 @@ exports.applyJob = async (req, res) => {
       },
       { new: true }
     )
-    const updateUser = await User.findByIdAndUpdate(userId,{ $push : {jobsApplied : jobId}},{new:true})
-    console.log(updateUser)
+    const updateUser = await User.findByIdAndUpdate(userId,{ $push : {jobsApplied : jobId}},{new:true}) ;
     return res.status(200).json({
       success: true,
       message: "Job Applied",
@@ -68,7 +67,6 @@ exports.getAppliedJobs = async (req, res) => {
         message: "No Applied Jobs Found",
       });
     }
-    console.log("one");
     return res.status(200).json({
       success: true,
       message: "Applied Jobs Fetched Successfully",
@@ -82,12 +80,10 @@ exports.getAppliedJobs = async (req, res) => {
   }
 };
 
-//admin will show how much user has been applied to the job
+
 exports.getApplicants = async (req, res) => {
   try {
-    console.log("Here")
     const jobId = req.body.id;
-    console.log("jobId",jobId)
     const job = await Job.findById(jobId).populate({
       path: "applications",
       options: { sort: { createdAt: -1 } },
@@ -95,7 +91,6 @@ exports.getApplicants = async (req, res) => {
         path: "applicant",
       },
     });
-    console.log(job)
     if (!job) {
       return res.status(404).json({
         message: "Job not found.",
@@ -115,7 +110,6 @@ exports.updateStatus = async (req, res) => {
   try {
     const applicationId = req.body.id;
     const { status } = req.body;
-    console.log(applicationId,status)
     if (!status) {
       return res.status(400).json({
         success: false,
