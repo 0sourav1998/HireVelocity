@@ -7,7 +7,7 @@ exports.isAuthanticated = async(req,res,next)=>{
         if(!token){
             return res.status(401).json({
                 success : false ,
-                message : "Token is Required or User not Authanticated"
+                message : "Token is Required or User not Authenticated"
             })
         }
         const decode = jwt.verify(token,process.env.JWT_SECRET);
