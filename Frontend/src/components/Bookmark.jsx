@@ -67,7 +67,7 @@ const Bookmark = () => {
           </div>
         </div>
       </div>
-      <Footer/>
+      
     </div>
   );
 };

@@ -33,7 +33,7 @@ const Applicants = () => {
           <ApplicantsTable />
         </div>
       </main>
-      <Footer/>
+      
     </div>
   );
 };

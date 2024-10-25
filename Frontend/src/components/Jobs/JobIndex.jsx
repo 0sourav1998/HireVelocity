@@ -56,7 +56,7 @@ const JobIndex = () => {
           )}
         </div>
       </div>
-      <Footer/>
+      
     </div>
   );
 };

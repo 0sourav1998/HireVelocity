@@ -125,7 +125,7 @@ const JobDescription = () => {
           </h2>
         </div>
       </div>
-      <Footer/>
+      
     </div>
   );
 };

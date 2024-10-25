@@ -34,7 +34,7 @@ const CreateCompany = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-between">
+    <div className="flex flex-col justify-between">
       <Navbar />
       <div className="max-w-4xl mx-auto sm:mt-8 sm:p-6 mt-4 p-3 bg-white shadow-lg rounded-lg">
         <div className="flex flex-col gap-y-4 mb-6">
@@ -69,7 +69,7 @@ const CreateCompany = () => {
           </Button>
         </div>
       </div>
-      <Footer/>
+      
     </div>
   );
 };

@@ -245,7 +245,6 @@ const CreateJob = () => {
         </form>
       </div>
       </div>
-      <Footer/>
     </div>
   );
 };

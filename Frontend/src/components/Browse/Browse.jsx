@@ -32,7 +32,6 @@ const Browse = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

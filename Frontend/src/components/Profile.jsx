@@ -85,7 +85,7 @@ const Profile = () => {
       </div>
       {open && <UpdateProfile open={open} setOpen={setOpen} />}
       <div  className="sm:mt-10 mt-5">
-      <Footer/>
+      
       </div>
     </div>
   );

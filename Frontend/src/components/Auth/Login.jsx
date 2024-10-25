@@ -23,9 +23,9 @@ const Login = () => {
     dispatch(login({email:email,password:password,role:role},navigate))
   }
   return (
-    <div>
+    <div className="h-full">
       <Navbar />
-      <div className="flex justify-center items-center max-w-7xl mx-auto mb-10 mt-10">
+      <div className="flex justify-center items-center h-[80vh] max-w-7xl mx-auto mb-10 mt-10">
         <form className="flex flex-col gap-y-3 sm:w-1/2 w-[95%] border border-gray-200 rounded-md p-4 shadow-lg" onSubmit={handleSubmit}>
           <h1 className="text-center text-2xl font-semibold">Login</h1>
           <div>

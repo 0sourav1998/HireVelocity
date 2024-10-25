@@ -38,7 +38,6 @@ const AdminJobs = () => {
           <AdminJobTable />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

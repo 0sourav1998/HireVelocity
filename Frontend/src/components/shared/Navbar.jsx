@@ -83,6 +83,7 @@ const Navbar = () => {
                         user?.profile?.profilePhoto ||
                         `https://api.dicebear.com/5.x/initials/svg?seed=${user?.fullName}`
                       }
+                      className="rounded-full"
                       alt="@shadcn"
                     />
                   </Avatar>

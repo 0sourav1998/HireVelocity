@@ -36,7 +36,6 @@ const Companies = () => {
           <ComapnyTable />
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

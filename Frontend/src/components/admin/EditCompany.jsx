@@ -177,7 +177,7 @@ const EditCompany = () => {
           </button>
         </div>
       </div>
-      <Footer/>
+      
     </div>
   );
 }

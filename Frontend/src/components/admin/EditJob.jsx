@@ -253,7 +253,6 @@ const EditJob = () => {
           </div>
         </div>
       </div>
-      <Footer/>
     </div>
   );
 };

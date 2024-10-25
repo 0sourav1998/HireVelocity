@@ -21,7 +21,7 @@ import EditJob from "./components/admin/EditJob";
 
 function App() {
   return (
-    <div>
+    <div className="min-h-screen">
       <Routes>
         <Route element={<Home />} path="/" />
         <Route element={<Login />} path="/login" />
